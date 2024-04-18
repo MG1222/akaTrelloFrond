@@ -1,0 +1,77 @@
+.row {
+  margin-top: 5dvh;
+}
+
+.row::ng-deep {
+  justify-content: space-around;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+
+  & > * {
+    flex-grow: 1;
+  }
+}
+
+.aze {
+  text-align: center;
+  width: 30dvw;
+}
+.aze::ng-deep > * > * {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 5px;
+  margin: 8px 0;
+  padding: 8px;
+  outline: 1px solid red;
+  min-height: 30dvh;
+
+  border-radius: 8px;
+  & > .sortable-item {
+    padding: 8px 8px;
+    outline: 1px solid black;
+    border-radius: 4px;
+
+    cursor: grab;
+    &:active {
+      cursor: grabbing;
+      cursor: -moz-grabbing;
+      cursor: -webkit-grabbing;
+    }
+  }
+
+  & > .placeholderStyle {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.sortable-item {
+  background-color: blue;
+}
+
+.modalList {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: red;
+  width: 60dvw;
+  height: 60dvh;
+  z-index: 2;
+  display: none;
+  flex-direction: column;
+}
+
+.modalListBG {
+  position: fixed;
+  display: none;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalListOpen {
+  display: flex;
+}

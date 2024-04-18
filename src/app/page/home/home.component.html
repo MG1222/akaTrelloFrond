@@ -1,0 +1,11 @@
+<div>
+  <h1>home works! </h1> 
+  <h1>{{ counterHeures }}h {{ counterMinutes }}min {{ counter }}sec</h1> 
+  <div class="buttons">  
+    <app-button title="Increment" (click)="incr()">Increment</app-button>
+    <app-button [title]="isPaused ? '>' : 'll'" (click)="pause()" ></app-button>
+    <app-button [title]="isPaused ? '>' : 'ロ'" (click)="stop()" ></app-button>
+    <app-button [title]="isPaused ? '>' : 'qsdqsdqs'" (click)="clickButton()" ></app-button>
+  </div>
+
+</div>
