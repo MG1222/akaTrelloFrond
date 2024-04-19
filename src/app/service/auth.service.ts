@@ -18,7 +18,12 @@ export class AuthService {
   }
 
   async register(email: string, password: string): Promise<void> {
-    const res = await this.http.post('/register', {email, password}).toPromise();
+    try {
+      const res = await this.http.post('/signup', {email, password}).toPromise();
+    } catch (error) {
+      console.error(error);
+      throw new Error('Registration failed. Please try again.');
+    }
   }
 
   async loginFromStorage(): Promise<User | null> {
