@@ -17,6 +17,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NavComponent } from './lib/nav/nav.component';
 import { ProjectComponent} from "./page/project/project.component";
 import { UserComponent } from './page/user/user.component';
+import { FooterComponent } from './lib/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { UserComponent } from './page/user/user.component';
     NavComponent,
     ProjectComponent,
     UserComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

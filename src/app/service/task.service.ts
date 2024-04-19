@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {tap} from "rxjs/operators";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class TaskService {
-
   constructor(private http: HttpClient) {}
 
   allTasks: Object[] = [];
@@ -27,6 +26,13 @@ export class TaskService {
     { id: 4, name: "Margad" },
   ];
 
+  allProjects = [
+    { id: 1, name: "Projet 1" },
+    { id: 2, name: "Projet 2" },
+    { id: 3, name: "Projet 3" },
+    { id: 4, name: "Projet 4" },
+  ];
+
   selectedItem = {
     id: "-1",
     taskTitle: "Default Title",
@@ -43,18 +49,18 @@ export class TaskService {
 
   getTasks(): Observable<any> {
     return this.http.get<Object[]>("http://localhost:3001/tasks").pipe(
-        tap((tasks) => {
-          this.allTasks = tasks;
-          this.todoTasks = this.allTasks.filter(
-              (task: any) => task.taskStatus === "todo"
-          );
-          this.doingTasks = this.allTasks.filter(
-              (task: any) => task.taskStatus === "doing"
-          );
-          this.doneTasks = this.allTasks.filter(
-              (task: any) => task.taskStatus === "done"
-          );
-        })
+      tap((tasks) => {
+        this.allTasks = tasks;
+        this.todoTasks = this.allTasks.filter(
+          (task: any) => task.taskStatus === "todo"
+        );
+        this.doingTasks = this.allTasks.filter(
+          (task: any) => task.taskStatus === "doing"
+        );
+        this.doneTasks = this.allTasks.filter(
+          (task: any) => task.taskStatus === "done"
+        );
+      })
     );
   }
 
