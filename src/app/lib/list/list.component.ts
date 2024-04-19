@@ -18,6 +18,7 @@ export class ListComponent implements OnChanges {
   @ViewChild(ListComponent) childComponent!: ListComponent;
 
   isModalOpen = true;
+  isModalCreateOpen = true;
   filteredTasksTodo!: any[];
   lastExecutionTime = 0;
   grabbedItem: any = "";
@@ -32,7 +33,6 @@ export class ListComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {}
 
   limitedConsoleL(text: any) {
-
     const now = Date.now();
     if (now - this.lastExecutionTime >= 200) {
       console.log(text);
@@ -63,8 +63,8 @@ export class ListComponent implements OnChanges {
 
   updateModal() {
     this.taskService.updateTask(
-      this.taskService.selectedItem.id,
-      this.taskService.selectedItem
+        this.taskService.selectedItem.id,
+        this.taskService.selectedItem
     );
     this.taskService.initDB();
     this.closeModal();

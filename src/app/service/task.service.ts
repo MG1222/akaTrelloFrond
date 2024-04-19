@@ -8,13 +8,24 @@ import {tap} from "rxjs/operators";
 })
 export class TaskService {
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {}
 
   allTasks: Object[] = [];
   todoTasks: Object[] = [];
   doingTasks: Object[] = [];
   doneTasks: Object[] = [];
+
+  allStatus = [
+    { name: "To do", value: "todo", default: true, disabled: true },
+    { name: "Doing", value: "doing", default: true, disabled: true },
+    { name: "Done", value: "done", default: true, disabled: true },
+  ];
+  allMembers = [
+    { id: 1, name: "Dorian" },
+    { id: 2, name: "Vincent" },
+    { id: 3, name: "Fred" },
+    { id: 4, name: "Margad" },
+  ];
 
   selectedItem = {
     id: "-1",
@@ -23,10 +34,12 @@ export class TaskService {
     taskStatus: "taskStatus",
     comments: "comments",
     taskMembers: "taskMembers",
-    date: "date",
+    startDate: "date",
+    endDate: "date",
   };
 
   isModalOpen = false;
+  isCreateModalOpen = false;
 
   getTasks(): Observable<any> {
     return this.http.get<Object[]>("http://localhost:3001/tasks").pipe(
@@ -46,7 +59,6 @@ export class TaskService {
   }
 
   addTask(task: any) {
-
     this.http.post("http://localhost:3001/tasks", task).toPromise();
     this.initDB();
   }

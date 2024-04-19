@@ -1,75 +1,85 @@
 <div class="row">
-  <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
-    <p>To DO</p>
-    <bs-sortable
-      [(ngModel)]="taskService.todoTasks"
-      [itemTemplate]="detailedItemTemplate"
-      itemClass="sortable-item"
-      itemActiveClass="sortable-item-active"
-      placeholderItem="Drag here"
-      placeholderClass="placeholderStyle text-center"
-      wrapperClass="sortable-wrapper"
-      (onChange)="limitedConsoleL('todo')"
-    ></bs-sortable>
-  </div>
-  <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
-    <p>In Progress</p>
-    <bs-sortable
-      [(ngModel)]="taskService.doingTasks"
-      [itemTemplate]="detailedItemTemplate"
-      itemClass="sortable-item"
-      itemActiveClass="sortable-item-active"
-      placeholderItem="Drag here"
-      placeholderClass="placeholderStyle text-center"
-      wrapperClass="sortable-wrapper"
-      (onChange)="limitedConsoleL('doing')"
-    ></bs-sortable>
-  </div>
+    <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
+        <p>To DO</p>
+        <bs-sortable [(ngModel)]="taskService.todoTasks" [itemTemplate]="detailedItemTemplate" itemClass="sortable-item"
+                     itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle text-center"
+                     wrapperClass="sortable-wrapper" (onChange)="limitedConsoleL('todo')"></bs-sortable>
+        <button class="createTask" (click)="
+      taskService.isCreateModalOpen = !taskService.isCreateModalOpen
+    ">
+            +
+        </button>
+    </div>
+    <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
+        <p>In Progress</p>
+        <bs-sortable [(ngModel)]="taskService.doingTasks" [itemTemplate]="detailedItemTemplate" itemClass="sortable-item"
+                     itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle text-center"
+                     wrapperClass="sortable-wrapper" (onChange)="limitedConsoleL('doing')"></bs-sortable>
 
-  <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
-    <p>Done</p>
-    <bs-sortable
-      [(ngModel)]="taskService.doneTasks"
-      [itemTemplate]="detailedItemTemplate"
-      itemClass="sortable-item"
-      itemActiveClass="sortable-item-active"
-      placeholderItem="Drag here"
-      placeholderClass="placeholderStyle text-center"
-      wrapperClass="sortable-wrapper"
-      (onChange)="limitedConsoleL('done')"
-    ></bs-sortable>
-  </div>
+    </div>
+
+    <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
+        <p>Done</p>
+        <bs-sortable [(ngModel)]="taskService.doneTasks" [itemTemplate]="detailedItemTemplate" itemClass="sortable-item"
+                     itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="placeholderStyle text-center"
+                     wrapperClass="sortable-wrapper" (onChange)="limitedConsoleL('done')"></bs-sortable>
+    </div>
 </div>
 
 <div [class]="'modalList' + (isModalOpen ? '' : ' modalListOpen')">
-  <label for="title">Title :</label>
-  <input [(ngModel)]="selectedItem.taskTitle" name="title" id="title"/>
-  <label for="description">Description :</label>
-    <input [(ngModel)]="selectedItem.taskDescription" name="description" id="description"/>
-  <label for="status">Status :</label>
-    <input [(ngModel)]="selectedItem.taskStatus" name="status" id="status"/>
-  <label for="comments">Comments :</label>
-  <input [(ngModel)]="selectedItem.comments" name="comments" id="comments"/>
-  <label for="members">Members :</label>
-  <input [(ngModel)]="selectedItem.taskMembers" name="members" id="members"/>
-  <label for="date">Date :</label>
-  <input [(ngModel)]="selectedItem.date" name="date" id="date"/>
-  <button (click)="updateModal(); $event.preventDefault()">Save Changes</button>
-  <button (click)="deleteModal(selectedItem.id); $event.preventDefault()">
-    Delete
-  </button>
+    <label for="title">Title :</label>
+    <input class="form-control" [(ngModel)]="selectedItem.taskTitle" />
+    <label for="title">Description :</label>
+    <input class="form-control" [(ngModel)]="selectedItem.taskDescription" />
+    <div id="statusMemberWrapper">
+        <label for="title">Status :</label>
+        <select class="form-control form-select" [(ngModel)]="selectedItem.taskStatus">
+            <option *ngFor="let status of taskService.allStatus" [value]="status.value">
+                {{ status.name }}
+            </option>
+        </select>
+        <label for="title">Members :</label>
+        <select class="form-control form-select" id="taskMember" [(ngModel)]="selectedItem.taskMembers">
+            <option value="default" selected>
+                {{ selectedItem.taskMembers }}
+            </option>
+            <option *ngFor="let member of taskService.allMembers" [value]="member.name">
+                {{ member.name }}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="date">Start Date :</label>
+        <input type="date" class="form-control" id="startDate" [(ngModel)]="selectedItem.startDate"
+               [value]="selectedItem.startDate | date : 'yyyy-MM-dd'" />
+    </div>
+    <div class="form-group">
+        <label for="date">End Date :</label>
+        <input type="date" class="form-control" id="endDate" [(ngModel)]="selectedItem.endDate"
+               [value]="selectedItem.endDate | date : 'yyyy-MM-dd'" />
+    </div>
+    <div id="modalBtnWrapper">
+        <button cta="delete" (click)="deleteModal(selectedItem.id); $event.preventDefault()">
+            Delete
+        </button>
+        <button cta="cancel" (click)="updateModal(); $event.preventDefault()">
+            Cancel
+        </button>
+        <button cta="save" (click)="updateModal(); $event.preventDefault()">
+            Save
+        </button>
+    </div>
 </div>
-<div
-  (click)="closeModal()"
-  [class]="'modalListBG' + (isModalOpen ? '' : ' modalListOpen')"
-></div>
+<div (click)="closeModal()" [class]="'modalListBG' + (isModalOpen ? '' : ' modalListOpen')"></div>
+
+<div *ngIf="taskService.isCreateModalOpen">
+    <app-task-form id="modalCreateTask"></app-task-form>
+    <div class="modalCreateTaskBG" (click)="taskService.isCreateModalOpen = !taskService.isCreateModalOpen"></div>
+</div>
 
 <ng-template #detailedItemTemplate let-item="item" let-index="index">
-  <div
-    (click)="clickHandle(item)"
-    (pointerdown)="consoleL(item.value)"
-    (mouseup)="onMouseUpHandle($event)"
-  >
-    {{ item.value.taskTitle }}
-  </div>
+    <div (click)="clickHandle(item)" (pointerdown)="consoleL(item.value)" (mouseup)="onMouseUpHandle($event)">
+        {{ item.value.taskTitle }}
+    </div>
 </ng-template>

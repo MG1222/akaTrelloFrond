@@ -6,22 +6,11 @@ import {TaskService} from "../../service/task.service";
 @Component({
   selector: "app-task-form",
   templateUrl: "./task-form.component.html",
-  styles: [
-    `
-      #taskFormContainer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        & > * {
-          min-width: 50%;
-        }
-      }
-    `,
-  ],
+  styleUrls: [`./task-form.component.scss`],
 })
 export class TaskFormComponent implements OnInit {
   nrSelect: string = "todo";
+  nrSelectMember: string = "default";
   taskForm = new FormGroup({
     taskTitle: new FormControl("From Form"),
     taskDescription: new FormControl("default form description"),
@@ -45,3 +34,4 @@ export class TaskFormComponent implements OnInit {
     ]; */
   }
 }
+
