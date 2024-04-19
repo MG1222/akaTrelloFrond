@@ -20,6 +20,7 @@ import { UserComponent } from './page/user/user.component';
 import { LoginComponent } from './page/user/login/login.component';
 import { SignupComponent } from './page/user/signup/signup.component';
 import {HttpService} from "./service/http.service";
+import { FooterComponent } from "./lib/footer/footer.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {HttpService} from "./service/http.service";
     UserComponent,
     LoginComponent,
     SignupComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

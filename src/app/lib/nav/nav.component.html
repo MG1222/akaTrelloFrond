@@ -14,6 +14,9 @@
                     <a class="nav-link" routerLink="/contact">Contact</a>
                 </li>
                 <div class="navbar-nav d-flex flex-row-reverse">
+                    <li *ngFor="let project of taskService.allProjects" >
+                        <a class="dropdown-item" href="/project"> {{ project.name }}</a>
+                    </li>
                     <a class="nav-link p-2" *ngIf="auth.isLoggedIn()" routerLink="/create-task">Create Task</a>
                     <a class="nav-link p-2" *ngIf="auth.isLoggedIn()" routerLink="/task">TODO</a>
                 </div>
@@ -30,6 +33,8 @@
                     </ul>
                 </div>
             </ul>
+
         </div>
-    </div>
+
+  </div>
 </nav>

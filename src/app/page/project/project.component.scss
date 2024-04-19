@@ -1,7 +1,10 @@
-#contact-wrapper {
+#project-wrapper {
+  position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f5f5f5;
+  padding: clamp(50px, 10vh, 100px) 5dvw;
+  height: 100%;
+  & app-list {
+    width: clamp(400px, 100%, 1000px);
+  }
 }

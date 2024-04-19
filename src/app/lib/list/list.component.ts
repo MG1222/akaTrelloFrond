@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from "@angular/core";
 
-import {TaskService} from "../../service/task.service";
+import { TaskService } from "../../service/task.service";
 
 @Component({
   selector: "app-list",
@@ -19,6 +19,7 @@ export class ListComponent implements OnChanges {
 
   isModalOpen = true;
   isModalCreateOpen = true;
+  isEditMode = false;
   filteredTasksTodo!: any[];
   lastExecutionTime = 0;
   grabbedItem: any = "";
@@ -63,8 +64,8 @@ export class ListComponent implements OnChanges {
 
   updateModal() {
     this.taskService.updateTask(
-        this.taskService.selectedItem.id,
-        this.taskService.selectedItem
+      this.taskService.selectedItem.id,
+      this.taskService.selectedItem
     );
     this.taskService.initDB();
     this.closeModal();

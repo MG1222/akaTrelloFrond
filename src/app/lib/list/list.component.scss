@@ -22,15 +22,19 @@
   margin: 8px 0;
   padding: 8px;
   outline: 1px solid red;
-  min-height: 30dvh;
+  min-height: 40dvh;
 
   border-radius: 8px;
   & > .sortable-item {
+    position: relative;
     padding: 8px 8px;
     outline: 1px solid black;
     border-radius: 4px;
-
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     cursor: grab;
+
     &:active {
       cursor: grabbing;
       cursor: -moz-grabbing;
@@ -157,3 +161,52 @@
   padding: 1rem;
 }
 
+#listBtnWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  & > button {
+    width: clamp(150px, 10%, 300px);
+  }
+}
+
+.btnAndMember {
+  $btnSize: 1.5rem;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(-8px, -50%);
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+
+  & span:first-child {
+    background-color: $blue;
+    color: whitesmoke;
+    width: $btnSize;
+    height: $btnSize;
+    border-radius: 99vw;
+  }
+
+  & .taskDeleteBtn {
+    $btnSize: 1.5rem;
+    background-color: $ctaRed;
+    color: whitesmoke;
+    width: $btnSize;
+    height: $btnSize;
+    line-height: $btnSize;
+    text-align: center;
+    border-radius: 4px;
+    &:hover {
+      cursor: pointer;
+      background-color: darken($ctaRed, $amount: 5);
+    }
+  }
+}
+
+.taskItemtitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,23 @@
+.member-content .social-content li a{
+    display:inline-block;
+    padding:10;
+    min-width:40px;
+    height:40px;
+    font-size:21px;
+    line-height:40px;
+    color:#212529;
+    border-radius:5px;
+    box-shadow:0 3px 0 0 transparent;
+    -webkit-transition:all .3s ease-out;
+    transition:all .3s ease-out;
+  }
+
+.member-thumb{
+text-align:center;
+}
+
+.member-thumb .title{
+    font-size:16px;
+    margin:10px 0;
+    color:#212529;
+  }
