@@ -13,12 +13,13 @@ import { SortableModule } from "ngx-bootstrap/sortable";
 import { TaskFormComponent } from "./lib/task-form/task-form.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { TaskService} from "./service/task.service";
-import { HttpClientModule } from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { NavComponent } from './lib/nav/nav.component';
 import { ProjectComponent} from "./page/project/project.component";
 import { UserComponent } from './page/user/user.component';
 import { LoginComponent } from './page/user/login/login.component';
 import { SignupComponent } from './page/user/signup/signup.component';
+import {HttpService} from "./service/http.service";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,11 @@ import { SignupComponent } from './page/user/signup/signup.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [TaskService],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpService,
+    multi: true
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

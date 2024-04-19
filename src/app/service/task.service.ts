@@ -40,7 +40,7 @@ export class TaskService {
 
   isModalOpen = false;
   isCreateModalOpen = false;
-
+//TODO: change url
   getTasks(): Observable<any> {
     return this.http.get<Object[]>("http://localhost:3001/tasks").pipe(
         tap((tasks) => {

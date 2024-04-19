@@ -5,10 +5,11 @@
         </div>
         <div class="form">
             <h2>Se Connecter</h2>
-            <form>
-
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
+            <form #fLogin="ngForm" (ngSubmit)="onSubmit()">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" [(ngModel)]="email" placeholder="Email" required>
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" [(ngModel)]="password" placeholder="Password" required>
                 <button >Se Connecter</button>
             </form>
         </div>

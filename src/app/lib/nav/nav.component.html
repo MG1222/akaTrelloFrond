@@ -9,9 +9,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
+
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/contact">Contact</a>
                 </li>
+                <div class="navbar-nav d-flex flex-row-reverse">
+                    <a class="nav-link p-2" *ngIf="auth.isLoggedIn()" routerLink="/create-task">Create Task</a>
+                    <a class="nav-link p-2" *ngIf="auth.isLoggedIn()" routerLink="/task">TODO</a>
+                </div>
 
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -28,9 +28,7 @@ export class SignupComponent implements OnInit {
     }else {
         this.auth.register(this.email, this.password).then(() => {
             this.route.navigate(['/login']);
-        }).catch((e) => {
-            this.msgError = e.error.message;
-        });
+        })
     }
 
 
