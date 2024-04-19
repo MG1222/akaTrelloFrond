@@ -21,14 +21,17 @@ import {TaskService} from "../../service/task.service";
   ],
 })
 export class TaskFormComponent implements OnInit {
-  nrSelect: string = "todo";
+  nrSelect: string = "TODO";
   taskForm = new FormGroup({
-    taskTitle: new FormControl("From Form"),
-    taskDescription: new FormControl("default form description"),
-    taskStatus: new FormControl(),
-    comments: new FormControl("default form"),
+    name: new FormControl("From Form"),
+    description: new FormControl("default form description"),
+    startDate: new FormControl("11/10/1991"),
+    endDate: new FormControl("11/10/1991"),
+    statusEnum: new FormControl(),
+    listEntityId: new FormControl("default form"),
+    listLabelEntityId: new FormControl("default form"),
     taskMembers: new FormControl("default form"),
-    date: new FormControl("11/10/1991"),
+    
   });
 
   @ViewChild(ListComponent) childComponent!: ListComponent;

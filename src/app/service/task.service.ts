@@ -18,52 +18,57 @@ export class TaskService {
 
   selectedItem = {
     id: "-1",
-    taskTitle: "Default Title",
-    taskDescription: "taskDescription",
-    taskStatus: "taskStatus",
-    comments: "comments",
-    taskMembers: "taskMembers",
-    date: "date",
+    name: "Default Title",
+    description: "taskDescription",
+    startDate: "date",
+    endDate: "date",
+    position: -1,
+    statusEnum: "taskStatus",
+    listEntityId: -1,
+    listLabelEntityId: [],
+    membreId: -1,
+    
   };
 
   isModalOpen = false;
 
   getTasks(): Observable<any> {
-    return this.http.get<Object[]>("http://localhost:3001/tasks").pipe(
+    return this.http.get<Object[]>("http://localhost:5000/task").pipe(
         tap((tasks) => {
           this.allTasks = tasks;
           this.todoTasks = this.allTasks.filter(
-              (task: any) => task.taskStatus === "todo"
+              (task: any) => task.statusEnum === "TODO"
           );
+          console.log(this.todoTasks);
           this.doingTasks = this.allTasks.filter(
-              (task: any) => task.taskStatus === "doing"
+              (task: any) => task.statusEnum === "IN_PROGRESS"
           );
           this.doneTasks = this.allTasks.filter(
-              (task: any) => task.taskStatus === "done"
+              (task: any) => task.statusEnum === "DONE"
           );
         })
     );
   }
 
-  addTask(task: any) {
-    this.http.post("http://localhost:3001/tasks", task).toPromise();
-    this.initDB();
+  async addTask(task: any) {
+    await this.http.post("http://localhost:5000/task", task).toPromise();
+    await this.initDB();
   }
 
-  updateTask(id: any, task: any) {
+  async updateTask(id: any, task: any) {
     console.log("updateTask", id, task);
-    this.http.put(`http://localhost:3001/tasks/${id}`, task).toPromise();
-    this.initDB();
+    await this.http.put(`http://localhost:5000/task/${id}`, task).toPromise();
+    await this.initDB();
   }
 
-  deleteTask(id: any) {
-    this.http.delete(`http://localhost:3001/tasks/${id}`).toPromise();
-    this.initDB();
+  async deleteTask(id: any) {
+    await this.http.delete(`http://localhost:5000/task/${id}`).toPromise();
+    await this.initDB();
   }
 
-  initDB() {
-    this.getTasks().subscribe((data) => {
+  async initDB() {
+      const data = await this.getTasks().toPromise();
       this.allTasks = data;
-    });
-  }
+    };
+  
 }

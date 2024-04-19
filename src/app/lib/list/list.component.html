@@ -42,18 +42,29 @@
 </div>
 
 <div [class]="'modalList' + (isModalOpen ? '' : ' modalListOpen')">
-  <label for="title">Title :</label>
-  <input [(ngModel)]="selectedItem.taskTitle" name="title" id="title"/>
+  <label for="name">Title :</label>
+  <input [(ngModel)]="selectedItem.name" name="name" id="name"/>
   <label for="description">Description :</label>
-    <input [(ngModel)]="selectedItem.taskDescription" name="description" id="description"/>
-  <label for="status">Status :</label>
-    <input [(ngModel)]="selectedItem.taskStatus" name="status" id="status"/>
-  <label for="comments">Comments :</label>
-  <input [(ngModel)]="selectedItem.comments" name="comments" id="comments"/>
-  <label for="members">Members :</label>
-  <input [(ngModel)]="selectedItem.taskMembers" name="members" id="members"/>
-  <label for="date">Date :</label>
-  <input [(ngModel)]="selectedItem.date" name="date" id="date"/>
+    <input [(ngModel)]="selectedItem.description" name="description" id="description"/>
+    <label for="startDate">Date :</label>
+    <input [(ngModel)]="selectedItem.startDate" name="startDate" id="startDate"/>
+    <label for="endDate">Date :</label>
+    <input [(ngModel)]="selectedItem.endDate" name="endDate" id="endDate"/>
+  <label for="statusEnum">Status :</label>
+    <input [(ngModel)]="selectedItem.statusEnum" name="statusEnum" id="statusEnum"/>
+  <label for="listEntityId">Liste :</label>
+  <!--<input [(ngModel)]="selectedItem.listEntityId" name="listEntityId" id="listEntityId"/>-->
+  <select class="form-input" id="lists" [(ngModel)]="taskService.selectedItem.listEntityId" (ngModelChange)="onListChange($event)" name="lists">
+    <option *ngFor="let listEntity of lists" [value]="listEntity.id"> {{ listEntity.name }}</option>
+  </select>
+
+  <label for="members">Membre assigné :</label>
+  <select class="form-input" id="members" [(ngModel)]="taskService.selectedItem.membreId" (ngModelChange)="onMemberChange($event)" name="members">
+    <option></option>
+    <option *ngFor="let membreEntity of members" [value]="membreEntity.membreId"> {{ membreEntity.username }}</option>
+  </select>
+  <!--<input [(ngModel)]="selectedItem.membreId" name="membreId" id="members"/>-->
+
   <button (click)="updateModal(); $event.preventDefault()">Save Changes</button>
   <button (click)="deleteModal(selectedItem.id); $event.preventDefault()">
     Delete
@@ -70,6 +81,6 @@
     (pointerdown)="consoleL(item.value)"
     (mouseup)="onMouseUpHandle($event)"
   >
-    {{ item.value.taskTitle }}
+    {{ item.value.name }}
   </div>
 </ng-template>

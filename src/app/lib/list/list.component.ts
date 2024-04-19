@@ -6,13 +6,37 @@ import {
   ViewChild,
 } from "@angular/core";
 
-import {TaskService} from "../../service/task.service";
+import { TaskService } from "../../service/task.service";
+import { ListService } from "src/app/service/list.service";
+import { MembreService } from "src/app/service/membre.service";
+
+export type List = {
+  id: number,
+  name: string,
+  position: number,
+  statusEnum: string,
+  listTaskDTO: number[],
+  projectId: number
+}
+
+export type MemberInfo = {
+  membreId: number,
+  projectid: number,
+  role: string,
+  userId: number,
+  username: string,
+  password: string,
+  email: string
+}
 
 @Component({
   selector: "app-list",
   templateUrl: "./list.component.html",
   styleUrls: ["./list.component.scss"],
 })
+
+
+
 export class ListComponent implements OnChanges {
   @Input() parentData!: any;
   @ViewChild(ListComponent) childComponent!: ListComponent;
@@ -23,10 +47,38 @@ export class ListComponent implements OnChanges {
   grabbedItem: any = "";
   hoveredList = "";
 
-  constructor(public taskService: TaskService) {}
+  constructor(public taskService: TaskService,
+    private listService: ListService,
+    private memberService: MembreService
+  ) {}
+
+  lists: List[] = [];
+  members: MemberInfo[] = [];
+  selectedList: string = '';
+  selectedMember: string = '';
+  projectId: number = 2;
 
   ngOnInit() {
     this.taskService.initDB();
+    this.listService.getTasks(this.projectId).subscribe({
+      next: (lists) => {
+        this.lists = lists;
+        //console.log("LSITS " + this.lists);
+      },
+      error: (err) => {
+        console.error('Impossible de récupérer les listes : ', err);
+      }
+    });
+
+    this.memberService.getMembers(this.projectId).subscribe({
+      next: (members) => {
+        this.members = members;
+        //console.log("MEMBERS " + this.members);
+      },
+      error: (err) => {
+        console.error('Impossible de récupérer les membres : ', err);
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {}
@@ -53,6 +105,19 @@ export class ListComponent implements OnChanges {
 
   clickHandle(item: any) {
     this.taskService.selectedItem = item.value;
+    const testList = this.lists.find(l => l.id === item.value.listEntityId);
+    if(testList) {
+      this.selectedList = testList.name; 
+      console.log("ALLO LIST");
+    }
+    console.log(item.value.membreId);
+    
+    const testMember = this.members.find(m => m.userId === item.value.membreId);
+    if(testMember) {
+      console.log("testMember");
+      this.selectedMember = testMember.username; 
+    }
+
     this.closeModal();
   }
 
@@ -73,6 +138,25 @@ export class ListComponent implements OnChanges {
     this.taskService.deleteTask(idTask);
     this.taskService.initDB();
     this.closeModal();
+  }
+
+  onListChange(listEntityId: number) {
+    console.log('Changing list to:', listEntityId);
+    const list = this.lists.find(l => l.id === listEntityId);
+    if (list) {
+        this.selectedList = list.name;
+    }
+  }
+
+  onMemberChange(memberId: number) {
+    console.log('Changing member to:', memberId);
+    const member = this.members.find(l => l.userId === memberId);
+    if (member) {
+        this.selectedMember = member.username;
+    }
+    else {
+      this.selectedMember = '';
+    }
   }
 
   get selectedItem() {
