@@ -17,6 +17,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { NavComponent } from './lib/nav/nav.component';
 import { ProjectComponent} from "./page/project/project.component";
 import { UserComponent } from './page/user/user.component';
+import { LoginComponent } from './page/user/login/login.component';
+import { SignupComponent } from './page/user/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { UserComponent } from './page/user/user.component';
     NavComponent,
     ProjectComponent,
     UserComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
