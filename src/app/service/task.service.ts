@@ -46,6 +46,7 @@ export class TaskService {
   }
 
   addTask(task: any) {
+
     this.http.post("http://localhost:3001/tasks", task).toPromise();
     this.initDB();
   }

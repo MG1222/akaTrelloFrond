@@ -32,6 +32,7 @@ export class ListComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {}
 
   limitedConsoleL(text: any) {
+
     const now = Date.now();
     if (now - this.lastExecutionTime >= 200) {
       console.log(text);
