@@ -1,10 +1,36 @@
 .navbar {
   height: 4rem;
-  display: flex;
-  align-content: center;
+
   a {
     color: white;
   }
 
+.navbar-collapse {
+    justify-content: flex-end;
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 5rem;
+
+
+  .dropdown {
+    .dropdown-toggle {
+      text-decoration: none;
+    }
+      .dropdown-menu {
+        .dropdown-item {
+          color: #000000;
+          text-decoration: none;
+        }
+
+      }
+
+  }
+
+  }
 
 }
+
+}
+
