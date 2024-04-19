@@ -71,10 +71,8 @@
       class="form-control form-select"
       id="taskMember"
       [(ngModel)]="selectedItem.taskMembers"
+      [value]="selectedItem.taskMembers"
     >
-      <option value="default" selected>
-        {{ selectedItem.taskMembers }}
-      </option>
       <option
         *ngFor="let member of taskService.allMembers"
         [value]="member.name"
