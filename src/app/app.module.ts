@@ -15,6 +15,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { TaskService} from "./service/task.service";
 import { HttpClientModule } from "@angular/common/http";
 import { NavComponent } from './lib/nav/nav.component';
+import { ProjectComponent} from "./page/project/project.component";
+import { UserComponent } from './page/user/user.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { NavComponent } from './lib/nav/nav.component';
     ListComponent,
     TaskFormComponent,
     NavComponent,
+    ProjectComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
