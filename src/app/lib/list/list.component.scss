@@ -1,6 +1,4 @@
-.row {
-  margin-top: 5dvh;
-}
+@import "../../../var";
 
 .row::ng-deep {
   justify-content: space-around;
@@ -14,7 +12,7 @@
 
 .aze {
   text-align: center;
-  width: 30dvw;
+  flex-grow: 1;
 }
 .aze::ng-deep > * > * {
   display: flex;
@@ -24,15 +22,19 @@
   margin: 8px 0;
   padding: 8px;
   outline: 1px solid red;
-  min-height: 30dvh;
+  min-height: 40dvh;
 
   border-radius: 8px;
   & > .sortable-item {
+    position: relative;
     padding: 8px 8px;
     outline: 1px solid black;
     border-radius: 4px;
-
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     cursor: grab;
+
     &:active {
       cursor: grabbing;
       cursor: -moz-grabbing;
@@ -48,21 +50,40 @@
   }
 }
 
-.sortable-item {
-  background-color: blue;
+.createTask {
+  width: calc(100% - 16px);
+  background-color: $ctaNeutral;
+  color: black;
+  padding: 8px 8px;
+  outline: 1px solid black;
+  border-radius: 4px;
+  &:focus,
+  &:focus-within {
+    outline: 1px dotted black;
+  }
 }
+
+// MODAL
 
 .modalList {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: red;
-  width: 60dvw;
-  height: 60dvh;
+  background-color: whitesmoke;
+  width: clamp(400px, 60dvw, 600px);
+
   z-index: 2;
   display: none;
   flex-direction: column;
+  padding: 1rem;
+  gap: 4px;
+  & label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+  }
 }
 
 .modalListBG {
@@ -72,6 +93,120 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.modalCreateTaskBG {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .modalListOpen {
   display: flex;
+}
+
+#statusMemberWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-content: stretch;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  padding: 0.5rem 0 0 0;
+  & > label {
+    flex-grow: 1;
+    white-space: nowrap;
+  }
+
+  & > select {
+    padding: 0.375rem 0.75rem;
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+  }
+}
+
+#modalBtnWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0 0 0;
+
+  & > button {
+    width: clamp(150px, 25%, 300px);
+    white-space: ellipsis;
+
+    &[cta="cancel"] {
+      background-color: $ctaGrey;
+      &:hover {
+        background-color: darken($ctaGrey, $amount: 5);
+      }
+    }
+    &[cta="delete"] {
+      background-color: $ctaRed;
+      &:hover {
+        background-color: darken($ctaRed, $amount: 5);
+      }
+    }
+  }
+}
+
+#modalCreateTask {
+  position: fixed;
+  display: flex;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(400px, 60dvw, 800px);
+  background-color: whitesmoke;
+  z-index: 3;
+  padding: 1rem;
+}
+
+#listBtnWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  & > button {
+    width: clamp(150px, 10%, 300px);
+  }
+}
+
+.btnAndMember {
+  $btnSize: 1.5rem;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(-8px, -50%);
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+
+  & span:first-child {
+    background-color: $blue;
+    color: whitesmoke;
+    width: $btnSize;
+    height: $btnSize;
+    border-radius: 99vw;
+  }
+
+  & .taskDeleteBtn {
+    $btnSize: 1.5rem;
+    background-color: $ctaRed;
+    color: whitesmoke;
+    width: $btnSize;
+    height: $btnSize;
+    line-height: $btnSize;
+    text-align: center;
+    border-radius: 4px;
+    &:hover {
+      cursor: pointer;
+      background-color: darken($ctaRed, $amount: 5);
+    }
+  }
+}
+
+.taskItemtitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

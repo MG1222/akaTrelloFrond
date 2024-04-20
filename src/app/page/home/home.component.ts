@@ -3,18 +3,7 @@ import { Component, OnDestroy, OnInit, Input } from "@angular/core";
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
-  styles: [
-    `
-      .buttons {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-        gap: 0.5rem;
-      }
-    `,
-  ],
+  styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit, OnDestroy {
   counter!: number;

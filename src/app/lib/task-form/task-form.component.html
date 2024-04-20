@@ -1,67 +1,56 @@
 <form id="taskFormContainer" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="name">Title</label>
-    <input
-      type="text"
-      class="form-control"
-      id="name"
-      formControlName="name"
-      placeholder="Enter task title"
-    />
-  </div>
-  <div class="form-group">
-    <label for="description">Description</label>
-    <textarea
-      class="form-control"
-      id="description"
-      rows="3"
-      formControlName="description"
-    ></textarea>
-  </div>
-
-  <div class="form-group">
-    <label for="startDate">Date</label>
-    <input type="startDate" class="form-control" id="startDate" formControlName="startDate" />
-  </div>
-  <div class="form-group">
-    <label for="endDate">Date</label>
-    <input type="endDate" class="form-control" id="endDate" formControlName="endDate" />
-  </div>
-
-  <div class="form-group">
-    <label for="status">Status</label>
-    <select
-      class="form-control"
-      id="status"
-      formControlName="status"
-      [(ngModel)]="nrSelect"
-    >
-      <option value="TODO" selected>TODO</option>
-      <option value="doing">In Progress</option>
-      <option value="done">Done</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="listEntityId">Comments</label>
-    <textarea
-      class="form-control"
-      id="listEntityId"
-      rows="3"
-      formControlName="listEntityId"
-    ></textarea>
-  </div>
-  <div class="form-group">
-    <label for="membreId">Members</label>
-    <input
-      type=""
-      class="form-control"
-      id="membreId"
-      placeholder="Enter members"
-      formControlName="membreId"
-    />
-  </div>
-
-  <button type="submit" class="btn btn-primary">Submit</button>
-
-  <app-list [parentData]="taskForm.value"></app-list>
+    <div class="form-group">
+        <label for="name">Title</label>
+        <input
+                type="text"
+                class="form-control"
+                id="name"
+                formControlName="name"
+                placeholder="Enter task title"
+        />
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+                class="form-control"
+                id="description"
+                rows="3"
+                formControlName="description"
+        ></textarea>
+    </div>
+    <div id="statusMemberWrapper">
+        <div class="form-group">
+            <label for="listEntityId">Status :</label>
+            <select
+                    class="form-control form-select"
+                    id="listEntityId"
+                    formControlName="listEntityId"
+                    
+            >
+                <option *ngFor="let listEntity of lists" [value]="listEntity.id"> {{ listEntity.name }}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="membreId">Member :</label>
+            <select
+                    class="form-control form-select"
+                    id="membreId"
+                    formControlName="membreId"
+                    
+            >
+                <option value="default" selected disabled> Selectionnez un membre </option>
+                <option></option>
+                <option *ngFor="let member of members" [value]="member.username" > {{ member.username }} </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="startDate">Start date</label>
+        <input type="date" class="form-control" id="startDate" formControlName="startDate" />
+    </div>
+    <div class="form-group">
+        <label for="endDate">End date</label>
+        <input type="date" class="form-control" id="endDate" formControlName="endDate" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>

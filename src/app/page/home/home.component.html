@@ -1,11 +1,137 @@
-<div>
-  <h1>home works! </h1> 
-  <h1>{{ counterHeures }}h {{ counterMinutes }}min {{ counter }}sec</h1> 
-  <div class="buttons">  
-    <app-button title="Increment" (click)="incr()">Increment</app-button>
-    <app-button [title]="isPaused ? '>' : 'll'" (click)="pause()" ></app-button>
-    <app-button [title]="isPaused ? '>' : 'ロ'" (click)="stop()" ></app-button>
-    <app-button [title]="isPaused ? '>' : 'qsdqsdqs'" (click)="clickButton()" ></app-button>
-  </div>
+<div class="jumbotron">
+    <div class="container left">
+        <h1 class="display-3">AkaTrello</h1>
+        <p>- Rassemble toutes vos tâches, coéquipiers et outils au même endroit. Gardez tout au même endroit, même si votre équipe ne l'est pas.</p>
+        <p>- Avec AkaTrello, la collaboration devient un jeu d'enfant. Créez des tableaux pour chaque projet, ajoutez des listes pour suivre l'avancement des tâches, et attribuez des cartes à vos coéquipiers pour répartir les responsabilités. Vous pouvez également joindre des fichiers, ajouter des commentaires et définir des échéances pour ne rien oublier</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Commence</a></p>
+    </div>
+
+    <div class="conrainer right">
+        <img src="./assets/img/homepage-image.svg" class="img-fluid" alt="homepage-image.svg">
+
+    </div>
 
 </div>
+<img src="./assets/img/wave.svg" class="img-fluid" alt="wave.svg">
+<div class="d-flex" style="height: 150px;">
+    <div class="vr"></div>
+</div>
+
+
+<div class="container">
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-2 text-primary">World</strong>
+                    <h3 class="mb-0">
+                        <a class="text-dark" href="#">Featured post</a>
+                    </h3>
+                    <div class="mb-1 text-muted">Nov 12</div>
+                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#">Continue reading</a>
+                </div>
+                <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20250%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_18ef17fd8a8%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_18ef17fd8a8%22%3E%3Crect%20width%3D%22200%22%20height%3D%22250%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2256.1953125%22%20y%3D%22130.7%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-2 text-success">Design</strong>
+                    <h3 class="mb-0">
+                        <a class="text-dark" href="#">Post title</a>
+                    </h3>
+                    <div class="mb-1 text-muted">Nov 11</div>
+                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#">Continue reading</a>
+                </div>
+                <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20250%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_18ef17fd8aa%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_18ef17fd8aa%22%3E%3Crect%20width%3D%22200%22%20height%3D%22250%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2256.1953125%22%20y%3D%22130.7%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex" style="height: 200px;">
+    </div>
+
+    <h1 class="section-title text-center page-title">Meet our team</h1>
+    <p class="section-description text-center">We are a small team with great skills. See the faces behind the lines of code. </p>
+    <div class="row member-content">
+        <div class="col-sm-3 col-sm-offset-1 member-thumb  fade-right in">
+            <img class="img-responsive img-center img-thumbnail img-circle" src="./assets/img/fred.svg" alt="">
+            <h4>John Doe</h4>
+            <p class="title">Lead Designer &amp; Founder</p>
+        </div>
+        <div class="col-sm-7">
+            <div class="details">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <ul class="social-content">
+                    <li><a href="mailto:mail@example.com"><i class="fa fa-envelope fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-twitter fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-facebook fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-linkedin fa-fw"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row member-content right">
+        <div class="col-sm-3 col-sm-push-8 member-thumb">
+            <img class="img-responsive img-center img-thumbnail" src="./assets/img/M.svg" alt="">
+            <h4>John Doe</h4>
+            <p class="title">Designer</p>
+        </div>
+        <div class="col-sm-7 col-sm-pull-2">
+            <div class="details">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <ul class="social-content">
+                    <li><a href="mailto:mail@example.com"><i class="fa fa-envelope fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-twitter fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-facebook fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-linkedin fa-fw"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row member-content">
+        <div class="col-sm-3 col-sm-offset-1 member-thumb">
+            <img class="img-responsive img-center img-thumbnail img-circle" src="./assets/img/V.svg" alt="">
+            <h4>John Doe</h4>
+            <p class="title">Lead Developer</p>
+        </div>
+        <div class="col-sm-7   ">
+            <div class="details">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <ul class="social-content">
+                    <li><a href="mailto:mail@example.com"><i class="fa fa-envelope fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-twitter fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-facebook fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-linkedin fa-fw"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row member-content">
+        <div class="col-sm-3 col-sm-offset-1 member-thumb">
+            <img class="img-responsive img-center img-thumbnail img-circle" src="./assets/img/dorian.svg" alt="">
+            <h4>John Doe</h4>
+            <p class="title">Lead Developer</p>
+        </div>
+        <div class="col-sm-7   ">
+            <div class="details">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <ul class="social-content">
+                    <li><a href="mailto:mail@example.com"><i class="fa fa-envelope fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-twitter fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-facebook fa-fw"></i></a></li>
+                    <li><a href="#link"><i class="fa fa-linkedin fa-fw"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

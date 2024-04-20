@@ -1,5 +1,23 @@
 <div class="row">
-  <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
+
+  <div *ngFor="let itemList of lists" class="aze col-xs-1 col-1 col-md-2 col-lg-2">
+    <p>{{ itemList.name }}</p>
+    <bs-sortable
+        [(ngModel)]="tasksByList[itemList.id]"
+        [itemTemplate]="detailedItemTemplate"
+        itemClass="sortable-item"
+        itemActiveClass="sortable-item-active"
+        placeholderItem="Drag here"
+        placeholderClass="placeholderStyle text-center"
+        wrapperClass="sortable-wrapper"
+        (onChange)="limitedConsoleL(itemList.name)"
+      ></bs-sortable>
+  </div>
+
+
+
+
+  <!--<div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
     <p>To DO</p>
     <bs-sortable
       [(ngModel)]="taskService.todoTasks"
@@ -12,6 +30,7 @@
       (onChange)="limitedConsoleL('todo')"
     ></bs-sortable>
   </div>
+
   <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
     <p>In Progress</p>
     <bs-sortable
@@ -38,49 +57,96 @@
       wrapperClass="sortable-wrapper"
       (onChange)="limitedConsoleL('done')"
     ></bs-sortable>
-  </div>
+  </div>-->
 </div>
 
 <div [class]="'modalList' + (isModalOpen ? '' : ' modalListOpen')">
   <label for="name">Title :</label>
-  <input [(ngModel)]="selectedItem.name" name="name" id="name"/>
+  <input class="form-control" [(ngModel)]="selectedItem.name" name="name" id="name"/>
   <label for="description">Description :</label>
-    <input [(ngModel)]="selectedItem.description" name="description" id="description"/>
-    <label for="startDate">Date :</label>
-    <input [(ngModel)]="selectedItem.startDate" name="startDate" id="startDate"/>
-    <label for="endDate">Date :</label>
-    <input [(ngModel)]="selectedItem.endDate" name="endDate" id="endDate"/>
-  <label for="statusEnum">Status :</label>
-    <input [(ngModel)]="selectedItem.statusEnum" name="statusEnum" id="statusEnum"/>
-  <label for="listEntityId">Liste :</label>
-  <!--<input [(ngModel)]="selectedItem.listEntityId" name="listEntityId" id="listEntityId"/>-->
-  <select class="form-input" id="lists" [(ngModel)]="taskService.selectedItem.listEntityId" (ngModelChange)="onListChange($event)" name="lists">
-    <option *ngFor="let listEntity of lists" [value]="listEntity.id"> {{ listEntity.name }}</option>
-  </select>
+  <input class="form-control" [(ngModel)]="selectedItem.description" name="description" id="description"/>
 
-  <label for="members">Membre assigné :</label>
-  <select class="form-input" id="members" [(ngModel)]="taskService.selectedItem.membreId" (ngModelChange)="onMemberChange($event)" name="members">
-    <option></option>
-    <option *ngFor="let membreEntity of members" [value]="membreEntity.membreId"> {{ membreEntity.username }}</option>
-  </select>
-  <!--<input [(ngModel)]="selectedItem.membreId" name="membreId" id="members"/>-->
+  <div id="statusMemberWrapper">
+    <label for="listEntityId">Status :</label>
+    <select class="form-input" form-select id="lists" [(ngModel)]="taskService.selectedItem.listEntityId" (ngModelChange)="onListChange($event)" name="lists">
+      <option *ngFor="let listEntity of lists" [value]="listEntity.id"> {{ listEntity.name }}</option>
+    </select>
+    <label for="title">Members :</label>
+    <select class="form-control form-select" id="members" [(ngModel)]="taskService.selectedItem.membreId" (ngModelChange)="onMemberChange($event)" name="members">
+      <option></option>
+      <option *ngFor="let membreEntity of members" [value]="membreEntity.membreId"> {{ membreEntity.username }}</option>
+    </select>
+  </div>
 
-  <button (click)="updateModal(); $event.preventDefault()">Save Changes</button>
-  <button (click)="deleteModal(selectedItem.id); $event.preventDefault()">
-    Delete
-  </button>
+  <div class="form-group">
+    <label for="startDate">Start Date :</label>
+    <input type="date" class="form-control" name="startDate" id="startDate" [(ngModel)]="selectedItem.startDate" 
+        [value]="selectedItem.startDate | date : 'yyyy-MM-dd'" />
+  </div>
+  <div class="form-group">
+    <label for="endDate">End Date :</label>
+    <input
+      type="date"
+      class="form-control"
+      id="endDate"
+      name="endDate"
+      [(ngModel)]="selectedItem.endDate"
+      [value]="selectedItem.endDate | date : 'yyyy-MM-dd'"
+    />
+  </div>
+  <div id="modalBtnWrapper">
+    <button
+      cta="delete"
+      (click)="deleteModal(selectedItem.id); $event.preventDefault()"
+    >
+      Delete
+    </button>
+    <button cta="cancel" (click)="updateModal(); $event.preventDefault()">
+      Cancel
+    </button>
+    <button cta="save" (click)="updateModal(); $event.preventDefault()">
+      Save
+    </button>
+  </div>
 </div>
 <div
   (click)="closeModal()"
   [class]="'modalListBG' + (isModalOpen ? '' : ' modalListOpen')"
 ></div>
 
+<div *ngIf="taskService.isCreateModalOpen">
+  <app-task-form id="modalCreateTask"></app-task-form>
+  <div
+    class="modalCreateTaskBG"
+    (click)="taskService.isCreateModalOpen = !taskService.isCreateModalOpen"
+  ></div>
+</div>
+
+<div id="listBtnWrapper">
+  <button class="createTask" (click)="isEditMode = !isEditMode">Edit</button>
+  <button
+    class="createTask"
+    (click)="taskService.isCreateModalOpen = !taskService.isCreateModalOpen"
+  >
+    Add
+  </button>
+</div>
 <ng-template #detailedItemTemplate let-item="item" let-index="index">
   <div
     (click)="clickHandle(item)"
-    (pointerdown)="consoleL(item.value)"
+    (pointerdown)="consoleL(item.value, item)"
     (mouseup)="onMouseUpHandle($event)"
+    class="taskItemtitle"
   >
     {{ item.value.name }}
   </div>
-</ng-template>
+  <div class="btnAndMember">
+    <span>{{ item.value.username?.substring(0, 1) }}</span>
+    <span
+      class="taskDeleteBtn"
+      *ngIf="isEditMode"
+      (click)="taskService.deleteTask(item.value.id)"
+      >x</span
+    >
+  </div>
+</ng-template>sx
