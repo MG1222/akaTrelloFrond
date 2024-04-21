@@ -53,7 +53,8 @@
   <input class="form-control" [(ngModel)]="selectedItem.taskTitle" />
   <label for="title">Description :</label>
   <input class="form-control" [(ngModel)]="selectedItem.taskDescription" />
-  <div id="statusMemberWrapper">
+  <div class="statusMemberWrapper">
+    <div class="doubleWrapperDates">
     <label for="title">Status :</label>
     <select
       class="form-control form-select"
@@ -66,6 +67,8 @@
         {{ status.name }}
       </option>
     </select>
+  </div>
+    <div class="doubleWrapperDates">
     <label for="title">Members :</label>
     <select
       class="form-control form-select"
@@ -81,8 +84,12 @@
       </option>
     </select>
   </div>
+  </div>
 
+  
+  <div class="statusMemberWrapper">
   <div class="form-group">
+    <div class="doubleWrapperDates">
     <label for="date">Start Date :</label>
     <input
       type="date"
@@ -92,7 +99,9 @@
       [value]="selectedItem.startDate | date : 'yyyy-MM-dd'"
     />
   </div>
+  </div>
   <div class="form-group">
+    <div class="doubleWrapperDates">
     <label for="date">End Date :</label>
     <input
       type="date"
@@ -102,6 +111,22 @@
       [value]="selectedItem.endDate | date : 'yyyy-MM-dd'"
     />
   </div>
+  </div>
+</div>
+
+
+<div id="taskSpanTagWrapper">
+  <span class="taskSpanTag bs-tooltip-top" 
+  *ngFor="let tag of taskService.selectedItem.tags" 
+  (click)="consoleL(tag)" 
+  data-toggle="tooltip" 
+  [title]="tag.text" 
+  [style.background-color]="tag.color"
+ >
+{{ tag.text }}
+</span>
+</div>
+
   <div id="modalBtnWrapper">
     <button
       cta="delete"

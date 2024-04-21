@@ -33,6 +33,13 @@ export class TaskService {
     { id: 4, name: "Projet 4" },
   ];
 
+
+  allTags = [
+    { id: 1, text: 'Books', color: 'red', selected: false },
+    { id: 2, text: 'Movies Games', color: 'blue', selected: false },
+    { id: 3, text: 'Electromputers', color: 'green', selected: false },
+    { id: 4, text: 'Home, Tools', color: 'yellow', selected: false },
+  ];
   selectedItem = {
     id: "-1",
     taskTitle: "Default Title",
@@ -42,9 +49,35 @@ export class TaskService {
     taskMembers: "taskMembers",
     startDate: "date",
     endDate: "date",
-  };
+    tags: [
+      {
+        "id": 1,
+        "text": "Books",
+        "color": "red",
+        "selected": true
+      },
+      {
+        "id": 2,
+        "text": "Movies Games",
+        "color": "blue",
+        "selected": true
+      },
+      {
+        "id": 3,
+        "text": "Electromputers",
+        "color": "green",
+        "selected": true
+      },
+      {
+        "id": 4,
+        "text": "Home, Tools",
+        "color": "yellow",
+        "selected": true
+      }
+    ],
+  };;
 
-  isModalOpen = false;
+
   isCreateModalOpen = false;
 
   getTasks(): Observable<any> {

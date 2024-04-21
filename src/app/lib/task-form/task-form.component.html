@@ -55,6 +55,8 @@
       </select>
     </div>
   </div>
+
+  <div id="statusMemberWrapper">
   <div class="form-group">
     <label for="start_date">Start date</label>
     <input
@@ -73,6 +75,40 @@
       formControlName="endDate"
     />
   </div>
+</div>
+
+
+<!-- 
+<div formArrayName="tags">
+  <div class="form-group" *ngFor="let control of getTagsFormArray().controls; let i = index">
+    <label for="tag.text">{{ this.taskService.allTags[i].text}}</label>
+    <input type="checkbox"  [formControlName]="i" />
+  </div>
+</div>
+ -->
+
+<!--  <div class="tagsWrapper"> 
+  <div class="tagsWrapper"> 
+    <span *ngFor="let control of getTagsFormArray().controls; let i = index"
+      (click)="taskService.allTags[i].selected = !taskService.allTags[i].selected"
+      [ngClass]="{'selected': taskService.allTags[i].selected}">
+      {{ taskService.allTags[i].text}}
+    </span>
+  </div>
+ </div> -->
+
+
+ 
+ <div class="tagsWrapper"> 
+  <div class="tagsWrapper"> 
+    <span *ngFor="let tag of taskService.allTags; "
+      (click)="tag.selected = !tag.selected"
+      [ngClass]="{'selected': tag.selected}">
+      {{ tag.text}}
+    </span>
+  </div>
+ </div>
+
   <button type="submit" class="btn btn-primary">Submit</button>
-  <!--   <app-project [parentData]="taskForm.value"></app-project> -->
+
 </form>

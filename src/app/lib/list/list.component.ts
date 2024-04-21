@@ -17,8 +17,7 @@ export class ListComponent implements OnChanges {
   @Input() parentData!: any;
   @ViewChild(ListComponent) childComponent!: ListComponent;
 
-  isModalOpen = true;
-  isModalCreateOpen = true;
+  isModalOpen = false;
   isEditMode = false;
   filteredTasksTodo!: any[];
   lastExecutionTime = 0;
@@ -49,8 +48,8 @@ export class ListComponent implements OnChanges {
   }
 
   consoleL(text: any) {
-    this.grabbedItem = text;
-    console.log(this.grabbedItem + "  " + this.hoveredList);
+console.log(text);
+console.log(this.taskService.selectedItem);
   }
 
   clickHandle(item: any) {

@@ -19,6 +19,8 @@ import { ProjectComponent} from "./page/project/project.component";
 import { UserComponent } from './page/user/user.component';
 import { FooterComponent } from './lib/footer/footer.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +34,8 @@ import { FooterComponent } from './lib/footer/footer.component';
     ProjectComponent,
     UserComponent,
     FooterComponent,
+
+   
   ],
   imports: [
     BrowserModule,
