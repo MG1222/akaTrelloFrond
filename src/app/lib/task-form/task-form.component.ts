@@ -17,8 +17,8 @@ import { MembreService } from "src/app/service/membre.service";
   styleUrls: [`./task-form.component.scss`],
 })
 export class TaskFormComponent implements OnInit {
-  nrSelect: string = "TODO";
-  nrSelectMember: string = "default";
+  nrSelect: string = "102";
+  nrSelectMember: string = "";
   taskForm = new FormGroup({
     name: new FormControl("From Form"),
     description: new FormControl("default form description"),
