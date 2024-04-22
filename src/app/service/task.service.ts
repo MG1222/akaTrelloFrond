@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { tap } from "rxjs/operators";
 
 @Injectable({
@@ -14,6 +14,8 @@ export class TaskService {
   doingTasks: Object[] = [];
   doneTasks: Object[] = [];
 
+  isCreateModalOpen = false;
+
   allStatus = [
     { name: "To do", value: "todo", default: true, disabled: true },
     { name: "Doing", value: "doing", default: true, disabled: true },
@@ -25,20 +27,17 @@ export class TaskService {
     { id: 3, name: "Fred" },
     { id: 4, name: "Margad" },
   ];
-
   allProjects = [
     { id: 1, name: "Projet 1" },
     { id: 2, name: "Projet 2" },
     { id: 3, name: "Projet 3" },
     { id: 4, name: "Projet 4" },
   ];
-
-
   allTags = [
-    { id: 1, text: 'Books', color: 'red', selected: false },
-    { id: 2, text: 'Movies Games', color: 'blue', selected: false },
-    { id: 3, text: 'Electromputers', color: 'green', selected: false },
-    { id: 4, text: 'Home, Tools', color: 'yellow', selected: false },
+    { id: 1, text: "Urgent", color: "red", selected: false },
+    { id: 2, text: "Back", color: "cyan", selected: false },
+    { id: 3, text: "Front", color: "lightgreen", selected: false },
+    { id: 4, text: "Idea", color: "yellow", selected: false },
   ];
   selectedItem = {
     id: "-1",
@@ -51,34 +50,31 @@ export class TaskService {
     endDate: "date",
     tags: [
       {
-        "id": 1,
-        "text": "Books",
-        "color": "red",
-        "selected": true
+        id: 1,
+        text: "Books",
+        color: "red",
+        selected: true,
       },
       {
-        "id": 2,
-        "text": "Movies Games",
-        "color": "blue",
-        "selected": true
+        id: 2,
+        text: "Movies Games",
+        color: "blue",
+        selected: true,
       },
       {
-        "id": 3,
-        "text": "Electromputers",
-        "color": "green",
-        "selected": true
+        id: 3,
+        text: "Electromputers",
+        color: "green",
+        selected: true,
       },
       {
-        "id": 4,
-        "text": "Home, Tools",
-        "color": "yellow",
-        "selected": true
-      }
+        id: 4,
+        text: "Home, Tools",
+        color: "yellow",
+        selected: true,
+      },
     ],
-  };;
-
-
-  isCreateModalOpen = false;
+  };
 
   getTasks(): Observable<any> {
     return this.http.get<Object[]>("http://localhost:3001/tasks").pipe(

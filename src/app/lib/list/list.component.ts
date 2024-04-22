@@ -17,7 +17,7 @@ export class ListComponent implements OnChanges {
   @Input() parentData!: any;
   @ViewChild(ListComponent) childComponent!: ListComponent;
 
-  isModalOpen = false;
+  isModalOpen = true;
   isEditMode = false;
   filteredTasksTodo!: any[];
   lastExecutionTime = 0;
@@ -30,7 +30,12 @@ export class ListComponent implements OnChanges {
     this.taskService.initDB();
   }
 
-  ngOnChanges(changes: SimpleChanges) {}
+  ngOnChanges(changes: SimpleChanges) {
+    (async () => {
+      this.taskService.initDB();
+      this.filteredTasksTodo = this.taskService.todoTasks;
+    })();
+  }
 
   limitedConsoleL(text: any) {
     const now = Date.now();
@@ -48,8 +53,8 @@ export class ListComponent implements OnChanges {
   }
 
   consoleL(text: any) {
-console.log(text);
-console.log(this.taskService.selectedItem);
+    console.log(text);
+    console.log(this.taskService.selectedItem);
   }
 
   clickHandle(item: any) {
