@@ -2,12 +2,15 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
 import { tap } from "rxjs/operators";
+import { Task } from "../types";
 
 @Injectable({
   providedIn: "root",
 })
 export class TaskService {
   constructor(private http: HttpClient) {}
+
+  private taskListUpdated = new Subject<boolean>();
 
   allTasks: Object[] = [];
   todoTasks: Object[] = [];
@@ -27,91 +30,55 @@ export class TaskService {
     { id: 3, name: "Fred" },
     { id: 4, name: "Margad" },
   ];
-  allProjects = [
-    { id: 1, name: "Projet 1" },
-    { id: 2, name: "Projet 2" },
-    { id: 3, name: "Projet 3" },
-    { id: 4, name: "Projet 4" },
-  ];
-  allTags = [
-    { id: 1, text: "Urgent", color: "red", selected: false },
-    { id: 2, text: "Back", color: "cyan", selected: false },
-    { id: 3, text: "Front", color: "lightgreen", selected: false },
-    { id: 4, text: "Idea", color: "yellow", selected: false },
-  ];
-  selectedItem = {
-    id: "-1",
-    taskTitle: "Default Title",
-    taskDescription: "taskDescription",
-    taskStatus: "taskStatus",
-    comments: "comments",
-    taskMembers: "taskMembers",
-    startDate: "date",
-    endDate: "date",
-    tags: [
-      {
-        id: 1,
-        text: "Books",
-        color: "red",
-        selected: true,
-      },
-      {
-        id: 2,
-        text: "Movies Games",
-        color: "blue",
-        selected: true,
-      },
-      {
-        id: 3,
-        text: "Electromputers",
-        color: "green",
-        selected: true,
-      },
-      {
-        id: 4,
-        text: "Home, Tools",
-        color: "yellow",
-        selected: true,
-      },
-    ],
+
+  selectedItem: Task = {
+    name: "Default Title",
+    description: "taskDescription",
+    startDate: null,
+    endDate: null,
+    position: -1,
+    statusEnum: "taskStatus",
+    listEntityId: -1,
+    listLabelEntityId: [],
+    membreId: -1,
   };
 
   getTasks(): Observable<any> {
-    return this.http.get<Object[]>("http://localhost:3001/tasks").pipe(
+    return this.http.get<Object[]>("http://localhost:5000/task").pipe(
       tap((tasks) => {
         this.allTasks = tasks;
-        this.todoTasks = this.allTasks.filter(
-          (task: any) => task.taskStatus === "todo"
-        );
-        this.doingTasks = this.allTasks.filter(
-          (task: any) => task.taskStatus === "doing"
-        );
-        this.doneTasks = this.allTasks.filter(
-          (task: any) => task.taskStatus === "done"
-        );
       })
     );
   }
 
-  addTask(task: any) {
-    this.http.post("http://localhost:3001/tasks", task).toPromise();
-    this.initDB();
+  async addTask(task: any) {
+    await this.http.post("http://localhost:5000/task", task).toPromise();
+    await this.initDB();
+    this.taskListUpdated.next(true);
   }
 
-  updateTask(id: any, task: any) {
+  async updateTask(id: any, task: any) {
     console.log("updateTask", id, task);
-    this.http.put(`http://localhost:3001/tasks/${id}`, task).toPromise();
-    this.initDB();
+    await this.http.put(`http://localhost:5000/task/${id}`, task).toPromise();
+    await this.initDB();
   }
 
-  deleteTask(id: any) {
-    this.http.delete(`http://localhost:3001/tasks/${id}`).toPromise();
-    this.initDB();
+  async deleteTask(id: any) {
+    await this.http.delete(`http://localhost:5000/task/${id}`).toPromise();
+    await this.initDB();
   }
 
-  initDB() {
-    this.getTasks().subscribe((data) => {
-      this.allTasks = data;
-    });
+  async initDB() {
+    const data = await this.getTasks().toPromise();
+    this.allTasks = data;
+  }
+
+  get taskListUpdateNotifier(): Observable<boolean> {
+    return this.taskListUpdated.asObservable();
+  }
+
+  // Utilisez cette méthode pour déclencher une mise à jour
+  public notifyTaskListUpdated(): void {
+    this.taskListUpdated.next(true);
   }
 }
