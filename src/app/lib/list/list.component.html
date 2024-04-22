@@ -1,21 +1,20 @@
 <div class="row">
-
-  <div *ngFor="let itemList of lists" class="aze col-xs-1 col-1 col-md-2 col-lg-2">
+  <div
+    *ngFor="let itemList of lists"
+    class="aze col-xs-1 col-1 col-md-2 col-lg-2"
+  >
     <p>{{ itemList.name }}</p>
     <bs-sortable
-        [(ngModel)]="tasksByList[itemList.id]"
-        [itemTemplate]="detailedItemTemplate"
-        itemClass="sortable-item"
-        itemActiveClass="sortable-item-active"
-        placeholderItem="Drag here"
-        placeholderClass="placeholderStyle text-center"
-        wrapperClass="sortable-wrapper"
-        (onChange)="limitedConsoleL(itemList.name)"
-      ></bs-sortable>
+      [(ngModel)]="tasksByList[itemList.id]"
+      [itemTemplate]="detailedItemTemplate"
+      itemClass="sortable-item"
+      itemActiveClass="sortable-item-active"
+      placeholderItem="Drag here"
+      placeholderClass="placeholderStyle text-center"
+      wrapperClass="sortable-wrapper"
+      (onChange)="limitedConsoleL(itemList.name)"
+    ></bs-sortable>
   </div>
-
-
-
 
   <!--<div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
     <p>To DO</p>
@@ -62,51 +61,86 @@
 
 <div [class]="'modalList' + (isModalOpen ? '' : ' modalListOpen')">
   <label for="name">Title :</label>
-  <input class="form-control" [(ngModel)]="selectedItem.name" name="name" id="name"/>
+  <input
+    class="form-control"
+    [(ngModel)]="selectedItem.name"
+    name="name"
+    id="name"
+  />
   <label for="description">Description :</label>
-  <input class="form-control" [(ngModel)]="selectedItem.description" name="description" id="description"/>
+  <input
+    class="form-control"
+    [(ngModel)]="selectedItem.description"
+    name="description"
+    id="description"
+  />
 
   <div id="statusMemberWrapper">
     <div class="doubleWrapperDates">
       <label for="listEntityId">Status :</label>
-      <select class="form-input" form-select id="lists" [(ngModel)]="taskService.selectedItem.listEntityId" (ngModelChange)="onListChange($event)" name="lists">
-        <option *ngFor="let listEntity of lists" [value]="listEntity.id"> {{ listEntity.name }}</option>
-    </select>
+      <select
+        class="form-input"
+        form-select
+        id="lists"
+        [(ngModel)]="taskService.selectedItem.listEntityId"
+        (ngModelChange)="onListChange($event)"
+        name="lists"
+      >
+        <option *ngFor="let listEntity of lists" [value]="listEntity.id">
+          {{ listEntity.name }}
+        </option>
+      </select>
+    </div>
+    <div class="doubleWrapperDates">
+      <label for="title">Members :</label>
+      <select
+        class="form-control form-select"
+        id="members"
+        [(ngModel)]="taskService.selectedItem.membreId"
+        (ngModelChange)="onMemberChange($event)"
+        name="members"
+      >
+        <option></option>
+        <option
+          *ngFor="let membreEntity of members"
+          [value]="membreEntity.membreId"
+        >
+          {{ membreEntity.username }}
+        </option>
+      </select>
+    </div>
   </div>
-  <div class="doubleWrapperDates">
-    <label for="title">Members :</label>
-    <select class="form-control form-select" id="members" [(ngModel)]="taskService.selectedItem.membreId" (ngModelChange)="onMemberChange($event)" name="members">
-      <option></option>
-      <option *ngFor="let membreEntity of members" [value]="membreEntity.membreId"> {{ membreEntity.username }}</option>
-    </select>
+
+  <div class="statusMemberWrapper">
+    <div class="form-group">
+      <div class="doubleWrapperDates">
+        <label for="startDate">Start Date :</label>
+        <input
+          type="date"
+          class="form-control"
+          name="startDate"
+          id="startDate"
+          [(ngModel)]="selectedItem.startDate"
+          [value]="selectedItem.startDate | date : 'yyyy-MM-dd'"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="doubleWrapperDates"></div>
+      <label for="date">End Date :</label>
+      <input
+        type="date"
+        class="form-control"
+        id="endDate"
+        name="endDate"
+        [(ngModel)]="selectedItem.endDate"
+        [value]="selectedItem.endDate | date : 'yyyy-MM-dd'"
+      />
+    </div>
   </div>
 </div>
 
-<div class="statusMemberWrapper">
-<div class="form-group">
-  <div class="doubleWrapperDates">
-    <label for="startDate">Start Date :</label>
-    <input type="date" class="form-control" name="startDate" id="startDate" [(ngModel)]="selectedItem.startDate" 
-        [value]="selectedItem.startDate | date : 'yyyy-MM-dd'" />
-
-  </div>
-</div>
-  <div class="form-group">
-    <div class="doubleWrapperDates"></div>
-    <label for="date">End Date :</label>
-    <input
-    type="date"
-    class="form-control"
-    id="endDate"
-    name="endDate"
-    [(ngModel)]="selectedItem.endDate"
-    [value]="selectedItem.endDate | date : 'yyyy-MM-dd'"
-  />
-  </div>
-</div>
-</div>
-
-<div id="taskSpanTagWrapper">
+<!-- <div id="taskSpanTagWrapper">
   <span
     class="taskSpanTag bs-tooltip-top"
     *ngFor="let tag of taskService.selectedItem.tags"
@@ -117,23 +151,23 @@
   >
     {{ tag.text }}
   </span>
+</div> -->
+
+<div id="modalBtnWrapper">
+  <button
+    cta="delete"
+    (click)="deleteModal(selectedItem.id); $event.preventDefault()"
+  >
+    Delete
+  </button>
+  <button cta="cancel" (click)="updateModal(); $event.preventDefault()">
+    Cancel
+  </button>
+  <button cta="save" (click)="updateModal(); $event.preventDefault()">
+    Save
+  </button>
 </div>
 
-  <div id="modalBtnWrapper">
-    <button
-      cta="delete"
-      (click)="deleteModal(selectedItem.id); $event.preventDefault()"
-    >
-      Delete
-    </button>
-    <button cta="cancel" (click)="updateModal(); $event.preventDefault()">
-      Cancel
-    </button>
-    <button cta="save" (click)="updateModal(); $event.preventDefault()">
-      Save
-    </button>
-  </div>
-</div>
 <div
   (click)="closeModal()"
   [class]="'modalListBG' + (isModalOpen ? '' : ' modalListOpen')"
@@ -185,4 +219,4 @@
     >
     </span>
   </div>
-</ng-template>sx
+</ng-template>

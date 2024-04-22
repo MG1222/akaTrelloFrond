@@ -35,8 +35,8 @@
           </a>
 
           <ul class="dropdown-menu">
-            <li *ngFor="let project of taskService.allProjects">
-              <a class="dropdown-item" href="/project"> {{ project.name }}</a>
+            <li *ngFor="let project of projectService.allProjects">
+              <a class="dropdown-item" href="/project"> {{ project | json }}</a>
             </li>
           </ul>
         </div>

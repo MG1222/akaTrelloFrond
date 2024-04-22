@@ -1,59 +1,71 @@
 <form id="taskFormContainer" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="name">Title</label>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      formControlName="name"
+      placeholder="Enter task title"
+    />
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea
+      class="form-control"
+      id="description"
+      rows="3"
+      formControlName="description"
+    ></textarea>
+  </div>
+  <div id="statusMemberWrapper">
     <div class="form-group">
-        <label for="name">Title</label>
-        <input
-                type="text"
-                class="form-control"
-                id="name"
-                formControlName="name"
-                placeholder="Enter task title"
-        />
+      <label for="listEntityId">Status :</label>
+      <select
+        class="form-control form-select"
+        id="listEntityId"
+        formControlName="listEntityId"
+      >
+        <option *ngFor="let listEntity of lists" [value]="listEntity.id">
+          {{ listEntity.name }}
+        </option>
+      </select>
     </div>
     <div class="form-group">
-        <label for="description">Description</label>
-        <textarea
-                class="form-control"
-                id="description"
-                rows="3"
-                formControlName="description"
-        ></textarea>
+      <label for="membreId">Member :</label>
+      <select
+        class="form-control form-select"
+        id="membreId"
+        formControlName="membreId"
+      >
+        <option value="default" selected disabled>
+          Selectionnez un membre
+        </option>
+        <option></option>
+        <option *ngFor="let member of members" [value]="member.username">
+          {{ member.username }}
+        </option>
+      </select>
     </div>
-    <div id="statusMemberWrapper">
-        <div class="form-group">
-            <label for="listEntityId">Status :</label>
-            <select
-                    class="form-control form-select"
-                    id="listEntityId"
-                    formControlName="listEntityId"
-                    
-            >
-                <option *ngFor="let listEntity of lists" [value]="listEntity.id"> {{ listEntity.name }}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="membreId">Member :</label>
-            <select
-                    class="form-control form-select"
-                    id="membreId"
-                    formControlName="membreId"
-                    
-            >
-                <option value="default" selected disabled> Selectionnez un membre </option>
-                <option></option>
-                <option *ngFor="let member of members" [value]="member.username" > {{ member.username }} </option>
-            </select>
-        </div>
-    </div>
-    <div id="statusMemberWrapper">
+  </div>
+  <div id="statusMemberWrapper">
     <div class="form-group">
-        <label for="startDate">Start date</label>
-        <input type="date" class="form-control" id="startDate" formControlName="startDate" />
+      <label for="startDate">Start date</label>
+      <input
+        type="date"
+        class="form-control"
+        id="startDate"
+        formControlName="startDate"
+      />
     </div>
     <div class="form-group">
-        <label for="endDate">End date</label>
-        <input type="date" class="form-control" id="endDate" formControlName="endDate" />
-    
-      </div>
+      <label for="endDate">End date</label>
+      <input
+        type="date"
+        class="form-control"
+        id="endDate"
+        formControlName="endDate"
+      />
     </div>
   </div>
 
@@ -69,4 +81,5 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     <!--   <app-project [parentData]="taskForm.value"></app-project> -->
+  </div>
 </form>

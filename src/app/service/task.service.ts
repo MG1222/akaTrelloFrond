@@ -24,6 +24,14 @@ export class TaskService {
     { name: "Doing", value: "doing", default: true, disabled: true },
     { name: "Done", value: "done", default: true, disabled: true },
   ];
+
+  allTags = [
+    { text: "Tag 1", selected: false, value: "tag1" },
+    { text: "Tag 2", selected: false, value: "tag2" },
+    { text: "Tag 3", selected: false, value: "tag3" },
+    { text: "Tag 4", selected: false, value: "tag4" },
+  ];
+
   allMembers = [
     { id: 1, name: "Dorian" },
     { id: 2, name: "Vincent" },
