@@ -79,19 +79,19 @@
   </div>
 
   <div class="form-group">
-    <label for="startDate">Start Date :</label>
-    <input type="date" class="form-control" name="startDate" id="startDate" [(ngModel)]="selectedItem.startDate" 
-        [value]="selectedItem.startDate | date : 'yyyy-MM-dd'" />
+    <label for="startdate">Start Date :</label>
+    <input type="date" class="form-control" name="startdate" id="startdate" [(ngModel)]="selectedItem.startdate" 
+        [value]="selectedItem.startdate | date : 'yyyy-MM-dd'" />
   </div>
   <div class="form-group">
-    <label for="endDate">End Date :</label>
+    <label for="enddate">End Date :</label>
     <input
       type="date"
       class="form-control"
-      id="endDate"
-      name="endDate"
-      [(ngModel)]="selectedItem.endDate"
-      [value]="selectedItem.endDate | date : 'yyyy-MM-dd'"
+      id="enddate"
+      name="enddate"
+      [(ngModel)]="selectedItem.enddate"
+      [value]="selectedItem.enddate | date : 'yyyy-MM-dd'"
     />
   </div>
   <div id="modalBtnWrapper">
@@ -141,7 +141,7 @@
     {{ item.value.name }}
   </div>
   <div class="btnAndMember">
-    <span>{{ item.value.username?.substring(0, 1) }}</span>
+    <span>{{ item.value.nameMemberTask }}</span>
     <span
       class="taskDeleteBtn"
       *ngIf="isEditMode"

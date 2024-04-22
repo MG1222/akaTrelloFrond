@@ -29,7 +29,7 @@ export class ListService {
 
 
   getLists(idproject: number): Observable<any> {
-    return this.http.get<Object[]>(`http://localhost:5000/list/project/${idproject}`).pipe(
+    return this.http.get<Object[]>(`http://localhost:8080/list/project/${idproject}`).pipe(
         tap((lists) => {
           this.allLists = lists;
         })
