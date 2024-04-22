@@ -17,7 +17,7 @@ export class TaskService {
   doingTasks: Object[] = [];
   doneTasks: Object[] = [];
 
-  isCreateModalOpen = false;
+  isCreateModalOpen = true;
 
   allStatus = [
     { name: "To do", value: "todo", default: true, disabled: true },
