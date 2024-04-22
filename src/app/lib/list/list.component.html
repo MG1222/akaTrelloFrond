@@ -15,48 +15,6 @@
       (onChange)="limitedConsoleL(itemList.name)"
     ></bs-sortable>
   </div>
-
-  <!--<div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
-    <p>To DO</p>
-    <bs-sortable
-      [(ngModel)]="taskService.todoTasks"
-      [itemTemplate]="detailedItemTemplate"
-      itemClass="sortable-item"
-      itemActiveClass="sortable-item-active"
-      placeholderItem="Drag here"
-      placeholderClass="placeholderStyle text-center"
-      wrapperClass="sortable-wrapper"
-      (onChange)="limitedConsoleL('todo')"
-    ></bs-sortable>
-  </div>
-
-  <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
-    <p>In Progress</p>
-    <bs-sortable
-      [(ngModel)]="taskService.doingTasks"
-      [itemTemplate]="detailedItemTemplate"
-      itemClass="sortable-item"
-      itemActiveClass="sortable-item-active"
-      placeholderItem="Drag here"
-      placeholderClass="placeholderStyle text-center"
-      wrapperClass="sortable-wrapper"
-      (onChange)="limitedConsoleL('doing')"
-    ></bs-sortable>
-  </div>
-
-  <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
-    <p>Done</p>
-    <bs-sortable
-      [(ngModel)]="taskService.doneTasks"
-      [itemTemplate]="detailedItemTemplate"
-      itemClass="sortable-item"
-      itemActiveClass="sortable-item-active"
-      placeholderItem="Drag here"
-      placeholderClass="placeholderStyle text-center"
-      wrapperClass="sortable-wrapper"
-      (onChange)="limitedConsoleL('done')"
-    ></bs-sortable>
-  </div>-->
 </div>
 
 <div [class]="'modalList' + (isModalOpen ? '' : ' modalListOpen')">
@@ -75,15 +33,14 @@
     id="description"
   />
 
-  <div id="statusMemberWrapper">
+  <div class="statusMemberWrapper">
     <div class="doubleWrapperDates">
       <label for="listEntityId">Status :</label>
       <select
-        class="form-input"
+        class="form-control form-select"
         form-select
         id="lists"
         [(ngModel)]="taskService.selectedItem.listEntityId"
-        (ngModelChange)="onListChange($event)"
         name="lists"
       >
         <option *ngFor="let listEntity of lists" [value]="listEntity.id">
@@ -97,7 +54,6 @@
         class="form-control form-select"
         id="members"
         [(ngModel)]="taskService.selectedItem.membreId"
-        (ngModelChange)="onMemberChange($event)"
         name="members"
       >
         <option></option>
@@ -138,9 +94,7 @@
       />
     </div>
   </div>
-</div>
-
-<!-- <div id="taskSpanTagWrapper">
+  <!-- <div id="taskSpanTagWrapper">
   <span
     class="taskSpanTag bs-tooltip-top"
     *ngFor="let tag of taskService.selectedItem.tags"
@@ -152,20 +106,20 @@
     {{ tag.text }}
   </span>
 </div> -->
-
-<div id="modalBtnWrapper">
-  <button
-    cta="delete"
-    (click)="deleteModal(selectedItem.id); $event.preventDefault()"
-  >
-    Delete
-  </button>
-  <button cta="cancel" (click)="updateModal(); $event.preventDefault()">
-    Cancel
-  </button>
-  <button cta="save" (click)="updateModal(); $event.preventDefault()">
-    Save
-  </button>
+  <div id="modalBtnWrapper">
+    <button
+      cta="delete"
+      (click)="deleteModal(selectedItem.id); $event.preventDefault()"
+    >
+      Delete
+    </button>
+    <button cta="cancel" (click)="updateModal(); $event.preventDefault()">
+      Cancel
+    </button>
+    <button cta="save" (click)="updateModal(); $event.preventDefault()">
+      Save
+    </button>
+  </div>
 </div>
 
 <div

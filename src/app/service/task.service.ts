@@ -52,7 +52,7 @@ export class TaskService {
   };
 
   getTasks(): Observable<any> {
-    return this.http.get<Object[]>("http://localhost:5000/task").pipe(
+    return this.http.get<Object[]>("http://localhost:8080/task").pipe(
       tap((tasks) => {
         this.allTasks = tasks;
       })
@@ -60,19 +60,20 @@ export class TaskService {
   }
 
   async addTask(task: any) {
-    await this.http.post("http://localhost:5000/task", task).toPromise();
+    await this.http.post("http://localhost:8080/task", task).toPromise();
     await this.initDB();
     this.taskListUpdated.next(true);
   }
 
   async updateTask(id: any, task: any) {
     console.log("updateTask", id, task);
-    await this.http.put(`http://localhost:5000/task/${id}`, task).toPromise();
+    await this.http.put(`http://localhost:8080/task/${id}`, task).toPromise();
     await this.initDB();
   }
 
   async deleteTask(id: any) {
-    await this.http.delete(`http://localhost:5000/task/${id}`).toPromise();
+    console.log(id);
+    await this.http.delete(`http://localhost:8080/task/${id}`).toPromise();
     await this.initDB();
   }
 
