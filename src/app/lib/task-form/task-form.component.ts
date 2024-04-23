@@ -1,14 +1,9 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import {
-  FormGroup,
-  FormControl,
-  FormArray,
-  AbstractControl,
-} from "@angular/forms";
+import { FormGroup, FormControl } from "@angular/forms";
 import { ListComponent } from "../list/list.component";
 import { TaskService } from "../../service/task.service";
 import { ListService } from "src/app/service/list.service";
-import { List, MemberInfo } from "src/app/types";
+import { List, MemberInfo, StatusEnum } from "src/app/types";
 import { MembreService } from "src/app/service/membre.service";
 
 @Component({
@@ -17,17 +12,17 @@ import { MembreService } from "src/app/service/membre.service";
   styleUrls: [`./task-form.component.scss`],
 })
 export class TaskFormComponent implements OnInit {
-  nrSelect: string = "102";
-  nrSelectMember: string = "";
+  nrSelect = "TODO";
+  nrSelectMember = this.memberService.loggedInUser;
   taskForm = new FormGroup({
-    name: new FormControl("From Form"),
-    description: new FormControl("default form description"),
+    name: new FormControl("Task X"),
+    description: new FormControl("default description"),
     startdate: new FormControl("1991-10-29"),
     enddate: new FormControl("1991-10-29"),
     statusEnum: new FormControl("TODO"),
     listEntityId: new FormControl("default form"),
     listLabelEntityId: new FormControl(null),
-    membreId: new FormControl(null),
+    membreId: new FormControl(),
   });
 
   @ViewChild(ListComponent) childComponent!: ListComponent;

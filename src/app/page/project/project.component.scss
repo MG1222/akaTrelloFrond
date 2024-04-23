@@ -42,6 +42,8 @@
   & .projectInfosDescription {
     overflow: hidden;
     text-overflow: ellipsis;
-    width: clamp(50px, 20dvw, 400px);
+    min-width: 50px;
+    width: 100%;
+    max-width: 20vw;
   }
 }

@@ -18,6 +18,7 @@ export class ProjectComponent implements OnInit {
   projectId: number = parseInt(window.location.pathname.split("/")[2]);
   allProjects: any[] = [];
   userId = this.memberService.loggedInUser;
+  isModalModifProjectOpen = true;
 
   /*   project = this.projectService.allProjects.filter( project => project.id === this.projectId)[0];
    */
@@ -25,7 +26,7 @@ export class ProjectComponent implements OnInit {
     //this.allProjects = this.projectService.getProjects(userId);
     this.projectService.getProjects(this.userId).subscribe({
       next: (projects) => {
-        this.allProjects = projects;
+        this.allProjects = projects.filter((e: any) => e.id === this.projectId);
       },
       error: (err) => {
         console.error("Impossible de récupérer les projets : ", err);
