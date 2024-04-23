@@ -22,5 +22,8 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-          npm run start
+      - name: Deploy to Netlify
+        run: |
+          npm install -g netlify-cli
+          netlify deploy --prod
       - run: echo "🍏 This job's status is ${{ job.status }}."
