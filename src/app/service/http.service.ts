@@ -14,9 +14,7 @@ export class HttpService {
   ): Observable<HttpEvent<any>> {
     const authReq = req.clone({
       setHeaders: {
-        Authorization: this.auth.accessToken
-          ? `Bearer ${this.auth.accessToken}`
-          : "",
+        Authorization: this.auth.token ? `Bearer ${this.auth.token}` : "",
       },
     });
 

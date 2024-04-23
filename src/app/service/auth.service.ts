@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { User } from '../types';
-
 type LoginResponse = {
-  accessToken: string;
+  token: string;
 } | string
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  accessToken: string | null = null;
+  token: string | null = null;
   user: User | null = null;
 
   constructor(private http: HttpClient) {
@@ -34,41 +33,36 @@ export class AuthService {
   }
 
   async loginFromStorage(): Promise<User | null> {
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) return null;
-    this.accessToken = accessToken;
-    this.user = this.decodeToken(accessToken);
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    this.token = token;
+    this.user = this.decodeToken(token);
     return this.user;
   }
 
   private decodeToken(token: string): User {
-    const payload = token.split('.')[1];
-    console.log(payload + ' payload');
-    const payloadDecoded = atob(payload);
+    const payloadDecoded = atob(token);
     return JSON.parse(payloadDecoded) as User;
   }
 
   async login(email: string, password: string): Promise<User | string> {
     try {
-
-      const res = await this.http.post<LoginResponse>('/user/login', {email, password}).toPromise();
+      const username = email.split('@')[0];
+      const res = await this.http.post<LoginResponse>('/user/login', {username, password}).toPromise();
 
       if (typeof res === 'string' || !res )
         throw new Error(res);
-      console.log(res.accessToken + ' token');
+      console.log(res, 'res');
+      console.log(res.token, 'token'); // Access the token here
 
-      const payload = res.accessToken.split('.')[1];
-      const payloadDecoded = atob(payload);
-      const userRaw = JSON.parse(payloadDecoded) as User;
-
-      this.user = userRaw;
-      this.accessToken = res.accessToken;
+      this.user = this.decodeToken(res.token);
+      this.token = res.token;
 
       // we add token to local storage
-      localStorage.setItem('accessToken', res.accessToken);
-      localStorage.getItem('accessToken');
+      localStorage.setItem('token', res.token);
+      localStorage.getItem('token');
 
-      return userRaw;
+      return this.user;
 
     } catch (e: any) {
       console.error(e);
@@ -81,12 +75,12 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!this.accessToken;
+    return !!this.token;
   }
 
   logout(): void {
-    this.accessToken = null;
+    this.token = null;
     this.user = null;
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem('token');
   }
 }
