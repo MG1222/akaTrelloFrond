@@ -26,6 +26,6 @@ jobs:
         run: |
           echo "npm install -g netlify-cli"
           npm install -g netlify-cli
-          echo "netlify deploy --dir=dist/app --prod --site e77c196e-e9e4-4893-a992-a157ad26621b --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}"
+          echo " netlify deploy --dir=dist/app --prod --site e77c196e-e9e4-4893-a992-a157ad26621b --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}"
           netlify deploy --dir=dist/app --prod --site e77c196e-e9e4-4893-a992-a157ad26621b --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
