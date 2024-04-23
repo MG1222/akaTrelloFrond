@@ -17,6 +17,15 @@ export type MemberInfo = {
     email: string
   }
 
+export type Project = {
+  id: number,
+  name: string,
+  description: string,
+  startdate: Date,
+  enddate: Date,
+  listListDTO: List[];
+  listMembreDTO: Object[];
+}
 
 export type List = {
     id: number,
@@ -32,8 +41,8 @@ export type List = {
     id?: number,
     name: string,
     description: string,
-    startDate?: Date | null,
-    endDate?: Date | null,
+    startdate?: Date | null,
+    enddate?: Date | null,
     position: number,
     statusEnum: string,
     listEntityId: number,

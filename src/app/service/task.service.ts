@@ -42,8 +42,8 @@ export class TaskService {
   selectedItem: Task = {
     name: "Default Title",
     description: "taskDescription",
-    startDate: null,
-    endDate: null,
+    startdate: null,
+    enddate: null,
     position: -1,
     statusEnum: "taskStatus",
     listEntityId: -1,

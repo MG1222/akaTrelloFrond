@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ProjectService } from "src/app/service/project.service";
 import { TaskService } from "src/app/service/task.service";
+import { Project } from "src/app/types";
 
 @Component({
   selector: "app-nav",
@@ -13,5 +14,18 @@ export class NavComponent implements OnInit {
     public projectService: ProjectService
   ) {}
 
-  ngOnInit(): void {}
+  allProjects:Project[] = [];
+  userId = 1;
+
+  ngOnInit(): void {
+    //this.allProjects = this.projectService.getProjects(userId);
+    this.projectService.getProjects(this.userId).subscribe({
+      next: (projects) => {
+        this.allProjects = projects;
+      },
+      error: (err) => {
+        console.error("Impossible de récupérer les projets : ", err);
+      },
+    });
+  }
 }

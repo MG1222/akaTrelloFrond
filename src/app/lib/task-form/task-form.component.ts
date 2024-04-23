@@ -22,8 +22,8 @@ export class TaskFormComponent implements OnInit {
   taskForm = new FormGroup({
     name: new FormControl("From Form"),
     description: new FormControl("default form description"),
-    startDate: new FormControl("1991-10-29"),
-    endDate: new FormControl("1991-10-29"),
+    startdate: new FormControl("1991-10-29"),
+    enddate: new FormControl("1991-10-29"),
     statusEnum: new FormControl("TODO"),
     listEntityId: new FormControl("default form"),
     listLabelEntityId: new FormControl(null),
@@ -91,4 +91,5 @@ export class TaskFormComponent implements OnInit {
         console.error("Error adding task:", err);
       });
   }
+
 }
