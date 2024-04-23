@@ -73,7 +73,7 @@ export class TaskService {
 
   async deleteTask(id: any) {
     await this.http.delete(`http://localhost:8080/task/${id}`).toPromise();
-    await this.initDB();
+    /*   await this.initDB(); */
     this.taskListUpdated.next(true);
   }
 

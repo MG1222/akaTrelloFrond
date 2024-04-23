@@ -1,14 +1,6 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import {
-  FormGroup,
-  FormControl,
-  FormArray,
-  AbstractControl,
-} from "@angular/forms";
-import { ListComponent } from "../list/list.component";
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormControl, FormArray } from "@angular/forms";
 import { TaskService } from "../../service/task.service";
-import { ListService } from "src/app/service/list.service";
-import { List, MemberInfo, User } from "src/app/types";
 import { MembreService } from "src/app/service/membre.service";
 import { ProjectService } from "src/app/service/project.service";
 

@@ -38,7 +38,7 @@ export class TaskFormComponent implements OnInit {
     private memberService: MembreService
   ) {}
 
-  projectId: number = 2;
+  projectId: number = parseInt(window.location.pathname.split("/")[2]);
   lists: List[] = [];
   members: MemberInfo[] = [];
 
@@ -82,14 +82,8 @@ export class TaskFormComponent implements OnInit {
 
   // Appel au service pour ajouter la tâche
   addTask(task: Task) {
-    this.taskService
-      .addTask(task)
-      /*       .then(() => {
-        this.taskService.notifyTaskListUpdated();
-      }) */
-      .catch((err) => {
-        console.error("Error adding task:", err);
-      });
+    this.taskService.addTask(task).catch((err) => {
+      console.error("Error adding task:", err);
+    });
   }
-
 }

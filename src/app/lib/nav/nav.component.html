@@ -36,8 +36,21 @@
 
           <ul class="dropdown-menu">
             <li *ngFor="let project of allProjects">
-              <a class="dropdown-item" href="/project"> {{ project.name }}</a>
+              <a class="dropdown-item" [href]="'/project/' + project.id">
+                {{ project.name }}
+              </a>
+              <span
+                class="projectEditBtn"
+                (click)="projectService.isModalProjectOpen = true"
+                >e
+              </span>
+              <span
+                class="taskDeleteBtn"
+                (click)="projectService.deleteProject(project.id)"
+                >&#215;
+              </span>
             </li>
+
             <li>
               <a
                 class="dropdown-item"

@@ -59,10 +59,10 @@ export class ListComponent implements OnChanges, OnDestroy {
   members: MemberInfo[] = [];
   selectedList: string = "";
   selectedMember: string = "";
-  projectId: number = 2;
+  projectId: number = parseInt(window.location.pathname.split("/")[2]);
   allTasks: Task[] = [];
   tasksByList: { [key: number]: Task[] } = {};
-  nameMemberTask: string = '';
+  nameMemberTask: string = "";
 
   ngOnInit() {
     this.taskService.initDB();
@@ -108,37 +108,41 @@ export class ListComponent implements OnChanges, OnDestroy {
 
   initializeTasks() {
     this.taskService.getTasks().subscribe({
-        next: (tasks: Task[]) => {
-            this.allTasks = tasks;
-            // on cherche à récupérer le nom du membre à partir de son id pour toutes les tâches
-            this.memberService.getMembers(this.projectId).subscribe({
-                next: (members: MemberInfo[]) => {
-                    const memberMap = new Map(members.map(member => [member.membreId, member]));
+      next: (tasks: Task[]) => {
+        this.allTasks = tasks;
+        // on cherche à récupérer le nom du membre à partir de son id pour toutes les tâches
+        this.memberService.getMembers(this.projectId).subscribe({
+          next: (members: MemberInfo[]) => {
+            const memberMap = new Map(
+              members.map((member) => [member.membreId, member])
+            );
 
-                    // Pour chaque liste, on met les tâches correspondant au statut.
-                    this.lists.forEach(list => {
-                        this.tasksByList[list.id] = tasks
-                            .filter(task => task.listEntityId === list.id)
-                            .map(task => {
-                                const member = memberMap.get(task.membreId);
-                                return {
-                                    ...task,
-                                    // Récupère l'initiale du membre, si la tâche est assignée.
-                                    nameMemberTask: member ? member.username.substring(0, 1).toUpperCase() : ''
-                                };
-                            });
-                    });
-                },
-                error: (err) => {
-                    console.error('Erreur lors de la récupération des membres :', err);
-                }
+            // Pour chaque liste, on met les tâches correspondant au statut.
+            this.lists.forEach((list) => {
+              this.tasksByList[list.id] = tasks
+                .filter((task) => task.listEntityId === list.id)
+                .map((task) => {
+                  const member = memberMap.get(task.membreId);
+                  return {
+                    ...task,
+                    // Récupère l'initiale du membre, si la tâche est assignée.
+                    nameMemberTask: member
+                      ? member.username.substring(0, 1).toUpperCase()
+                      : "",
+                  };
+                });
             });
-        },
-        error: (err) => {
-            console.error('Erreur lors de la récupération des tâches :', err);
-        }
+          },
+          error: (err) => {
+            console.error("Erreur lors de la récupération des membres :", err);
+          },
+        });
+      },
+      error: (err) => {
+        console.error("Erreur lors de la récupération des tâches :", err);
+      },
     });
-}
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     (async () => {
@@ -254,7 +258,7 @@ export class ListComponent implements OnChanges, OnDestroy {
       this.nameMemberTask = member.username.substring(0, 1).toUpperCase();
     } else {
       this.selectedMember = "";
-      this.nameMemberTask = '';
+      this.nameMemberTask = "";
     }
   }
 

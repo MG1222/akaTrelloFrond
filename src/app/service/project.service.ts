@@ -1,21 +1,19 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { TaskService } from "./task.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class ProjectService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public taskService: TaskService) {}
   isModalProjectOpen = false;
 
-  allProjects: Object[] = [
-    { id: 1, name: "Project 1" },
-    { id: 2, name: "Project 2" },
-    { id: 3, name: "Project 3" },
-    { id: 4, name: "Project 4" },
-  ];
+  private projectListUpdated = new Subject<boolean>();
+
+  allProjects: Object[] = [];
 
   getProjects(iduser: number): Observable<any> {
     return this.http
@@ -29,7 +27,16 @@ export class ProjectService {
 
   async addProject(project: any) {
     await this.http.post("http://localhost:8080/project", project).toPromise();
-    /*    await this.initDB();
-    this.taskListUpdated.next(true); */
+  }
+
+  async deleteProject(id: any) {
+    await this.http.delete(`http://localhost:8080/project/${id}`).toPromise();
+    this.projectListUpdated.next(true);
+  }
+
+  async updateProject(id: any, project: any) {
+    await this.http
+      .put(`http://localhost:8080/project/${id}`, project)
+      .toPromise();
   }
 }
