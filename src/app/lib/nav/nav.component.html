@@ -14,9 +14,6 @@
                     <a class="nav-link" routerLink="/contact">Contact</a>
                 </li>
                 <div class="navbar-nav d-flex flex-row-reverse">
-                    <li *ngFor="let project of taskService.allProjects" >
-                        <a class="dropdown-item" href="/project"> {{ project.name }}</a>
-                    </li>
                     <a class="nav-link p-2" *ngIf="auth.isLoggedIn()" routerLink="/create-task">Create Task</a>
                     <a class="nav-link p-2" *ngIf="auth.isLoggedIn()" routerLink="/task">TODO</a>
                 </div>
@@ -34,7 +31,35 @@
                 </div>
             </ul>
 
+          <ul class="dropdown-menu">
+            <li *ngFor="let project of allProjects">
+              <a class="dropdown-item" [href]="'/project/' + project.id">
+                {{ project.name }}
+              </a>
+              <span
+                class="projectEditBtn"
+                (click)="projectService.isModalProjectOpen = true"
+                >e
+              </span>
+              <span
+                class="taskDeleteBtn"
+                (click)="projectService.deleteProject(project.id)"
+                >&#215;
+              </span>
+            </li>
+
+            <li>
+              <a
+                class="dropdown-item"
+                style="text-align: center; cursor: pointer"
+                (click)="projectService.isModalProjectOpen = true"
+                >+</a
+              >
+            </li>
+          </ul>
         </div>
 
   </div>
 </nav>
+
+<app-modal *ngIf="projectService.isModalProjectOpen"></app-modal>

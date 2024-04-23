@@ -1,7 +1,15 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import {
+  FormGroup,
+  FormControl,
+  FormArray,
+  AbstractControl,
+} from "@angular/forms";
 import { ListComponent } from "../list/list.component";
-import {TaskService} from "../../service/task.service";
+import { TaskService } from "../../service/task.service";
+import { ListService } from "src/app/service/list.service";
+import { List, MemberInfo } from "src/app/types";
+import { MembreService } from "src/app/service/membre.service";
 
 @Component({
   selector: "app-task-form",
@@ -9,29 +17,73 @@ import {TaskService} from "../../service/task.service";
   styleUrls: [`./task-form.component.scss`],
 })
 export class TaskFormComponent implements OnInit {
-  nrSelect: string = "todo";
-  nrSelectMember: string = "default";
+  nrSelect: string = "102";
+  nrSelectMember: string = "";
   taskForm = new FormGroup({
-    taskTitle: new FormControl("From Form"),
-    taskDescription: new FormControl("default form description"),
-    taskStatus: new FormControl(),
-    comments: new FormControl("default form"),
-    taskMembers: new FormControl("default form"),
-    date: new FormControl("11/10/1991"),
+    name: new FormControl("From Form"),
+    description: new FormControl("default form description"),
+    startdate: new FormControl("1991-10-29"),
+    enddate: new FormControl("1991-10-29"),
+    statusEnum: new FormControl("TODO"),
+    listEntityId: new FormControl("default form"),
+    listLabelEntityId: new FormControl(null),
+    membreId: new FormControl(null),
   });
 
   @ViewChild(ListComponent) childComponent!: ListComponent;
 
-  constructor(public taskService: TaskService) {}
+  constructor(
+    public taskService: TaskService,
+    private listService: ListService,
+    private memberService: MembreService
+  ) {}
 
-  ngOnInit(): void {}
+  projectId: number = parseInt(window.location.pathname.split("/")[2]);
+  lists: List[] = [];
+  members: MemberInfo[] = [];
+
+  ngOnInit(): void {
+    //this.taskService.addTask(this.taskForm.value);
+    this.listService.getLists(this.projectId).subscribe({
+      next: (lists) => {
+        this.lists = lists;
+      },
+      error: (err) => {
+        console.error("Impossible de récupérer les listes : ", err);
+      },
+    });
+
+    this.memberService.getMembers(this.projectId).subscribe({
+      next: (members) => {
+        this.members = members;
+      },
+      error: (err) => {
+        console.error("Impossible de récupérer les membres : ", err);
+      },
+    });
+  }
 
   onSubmit(): void {
-    this.taskService.addTask(this.taskForm.value);
-    /*     this.childComponent.todoL = [
-      ...this.childComponent.todoL,
-      this.taskForm.value,
-    ]; */
+    // Ayant le nom du membre, on cherche à récupérer le membreId pour l'insertion en base
+    const username = this.taskForm.value.membreId;
+    const user = this.members.find((member) => member.username === username);
+    if (user) {
+      // Remplace le membreId avec la bonne valeur
+      const taskData = { ...this.taskForm.value, membreId: user.membreId };
+      this.addTask(taskData);
+    }
+    // Si on ne met pas de membre assigné à la tâche
+    else {
+      this.addTask(this.taskForm.value);
+    }
+
+    this.taskForm.reset();
+  }
+
+  // Appel au service pour ajouter la tâche
+  addTask(task: Task) {
+    this.taskService.addTask(task).catch((err) => {
+      console.error("Error adding task:", err);
+    });
   }
 }
-

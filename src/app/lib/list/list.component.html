@@ -1,109 +1,111 @@
 <div class="row">
-  <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
-    <p>To DO</p>
+  <div
+    *ngFor="let itemList of lists"
+    class="aze col-xs-1 col-1 col-md-2 col-lg-2"
+  >
+    <p>{{ itemList.name }}</p>
     <bs-sortable
-      [(ngModel)]="taskService.todoTasks"
+      [(ngModel)]="tasksByList[itemList.id]"
       [itemTemplate]="detailedItemTemplate"
       itemClass="sortable-item"
       itemActiveClass="sortable-item-active"
       placeholderItem="Drag here"
       placeholderClass="placeholderStyle text-center"
       wrapperClass="sortable-wrapper"
-      (onChange)="limitedConsoleL('todo')"
-    >
-    </bs-sortable>
-    <!--     <button
-      class="createTask"
-      (click)="taskService.isCreateModalOpen = !taskService.isCreateModalOpen"
-    >
-      +
-    </button> -->
-  </div>
-  <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
-    <p>In Progress</p>
-    <bs-sortable
-      [(ngModel)]="taskService.doingTasks"
-      [itemTemplate]="detailedItemTemplate"
-      itemClass="sortable-item"
-      itemActiveClass="sortable-item-active"
-      placeholderItem="Drag here"
-      placeholderClass="placeholderStyle text-center"
-      wrapperClass="sortable-wrapper"
-      (onChange)="limitedConsoleL('doing')"
-    ></bs-sortable>
-  </div>
-
-  <div class="aze col-xs-1 col-1 col-md-2 col-lg-2">
-    <p>Done</p>
-    <bs-sortable
-      [(ngModel)]="taskService.doneTasks"
-      [itemTemplate]="detailedItemTemplate"
-      itemClass="sortable-item"
-      itemActiveClass="sortable-item-active"
-      placeholderItem="Drag here"
-      placeholderClass="placeholderStyle text-center"
-      wrapperClass="sortable-wrapper"
-      (onChange)="limitedConsoleL('done')"
+      (onChange)="limitedConsoleL(itemList.name)"
     ></bs-sortable>
   </div>
 </div>
 
 <div [class]="'modalList' + (isModalOpen ? '' : ' modalListOpen')">
-  <label for="title">Title :</label>
-  <input class="form-control" [(ngModel)]="selectedItem.taskTitle" />
-  <label for="title">Description :</label>
-  <input class="form-control" [(ngModel)]="selectedItem.taskDescription" />
-  <div id="statusMemberWrapper">
-    <label for="title">Status :</label>
-    <select
-      class="form-control form-select"
-      [(ngModel)]="selectedItem.taskStatus"
-    >
-      <option
-        *ngFor="let status of taskService.allStatus"
-        [value]="status.value"
+  <label for="name">Title :</label>
+  <input
+    class="form-control"
+    [(ngModel)]="selectedItem.name"
+    name="name"
+    id="name"
+  />
+  <label for="description">Description :</label>
+  <input
+    class="form-control"
+    [(ngModel)]="selectedItem.description"
+    name="description"
+    id="description"
+  />
+
+  <div class="statusMemberWrapper">
+    <div class="doubleWrapperDates">
+      <label for="listEntityId">Status :</label>
+      <select
+        class="form-control form-select"
+        form-select
+        id="lists"
+        [(ngModel)]="taskService.selectedItem.listEntityId"
+        name="listEntityId"
       >
-        {{ status.name }}
-      </option>
-    </select>
-    <label for="title">Members :</label>
-    <select
-      class="form-control form-select"
-      id="taskMember"
-      [(ngModel)]="selectedItem.taskMembers"
-    >
-      <option value="default" selected>
-        {{ selectedItem.taskMembers }}
-      </option>
-      <option
-        *ngFor="let member of taskService.allMembers"
-        [value]="member.name"
+        <option *ngFor="let listEntity of lists" [value]="listEntity.id">
+          {{ listEntity.name }}
+        </option>
+      </select>
+    </div>
+    <div class="doubleWrapperDates">
+      <label for="title">Members :</label>
+      <select
+        class="form-control form-select"
+        id="members"
+        [(ngModel)]="taskService.selectedItem.membreId"
+        name="members"
       >
-        {{ member.name }}
-      </option>
-    </select>
+        <option></option>
+        <option
+          *ngFor="let membreEntity of members"
+          [value]="membreEntity.membreId"
+        >
+          {{ membreEntity.username }}
+        </option>
+      </select>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="date">Start Date :</label>
-    <input
-      type="date"
-      class="form-control"
-      id="startDate"
-      [(ngModel)]="selectedItem.startDate"
-      [value]="selectedItem.startDate | date : 'yyyy-MM-dd'"
-    />
+  <div class="statusMemberWrapper">
+    <div class="form-group">
+      <div class="doubleWrapperDates">
+        <label for="startdate">Start Date :</label>
+        <input
+          type="date"
+          class="form-control"
+          name="startdate"
+          id="startdate"
+          [(ngModel)]="selectedItem.startdate"
+          [value]="selectedItem.startdate | date : 'yyyy-MM-dd'"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="doubleWrapperDates"></div>
+      <label for="date">End Date :</label>
+      <input
+        type="date"
+        class="form-control"
+        id="enddate"
+        name="enddate"
+        [(ngModel)]="selectedItem.enddate"
+        [value]="selectedItem.enddate | date : 'yyyy-MM-dd'"
+      />
+    </div>
   </div>
-  <div class="form-group">
-    <label for="date">End Date :</label>
-    <input
-      type="date"
-      class="form-control"
-      id="endDate"
-      [(ngModel)]="selectedItem.endDate"
-      [value]="selectedItem.endDate | date : 'yyyy-MM-dd'"
-    />
-  </div>
+  <!-- <div id="taskSpanTagWrapper">
+  <span
+    class="taskSpanTag bs-tooltip-top"
+    *ngFor="let tag of taskService.selectedItem.tags"
+    (click)="consoleL(tag)"
+    data-toggle="tooltip"
+    [title]="tag.text"
+    [style.background-color]="tag.color"
+  >
+    {{ tag.text }}
+  </span>
+</div> -->
   <div id="modalBtnWrapper">
     <button
       cta="delete"
@@ -119,6 +121,7 @@
     </button>
   </div>
 </div>
+
 <div
   (click)="closeModal()"
   [class]="'modalListBG' + (isModalOpen ? '' : ' modalListOpen')"
@@ -141,22 +144,33 @@
     Add
   </button>
 </div>
+
 <ng-template #detailedItemTemplate let-item="item" let-index="index">
   <div
     (click)="clickHandle(item)"
-    (pointerdown)="consoleL(item.value)"
+    (pointerdown)="consoleL(item.value, item)"
     (mouseup)="onMouseUpHandle($event)"
     class="taskItemtitle"
   >
-    {{ item.value.taskTitle }}
+    {{ item.value.name }}
   </div>
   <div class="btnAndMember">
-    <span>{{ item.value.taskMembers.substring(0, 1) }}</span>
+    <span *ngIf="item.value.nameMemberTask" class="memberBubble">
+      {{ item.value.nameMemberTask }}
+    </span>
     <span
       class="taskDeleteBtn"
       *ngIf="isEditMode"
       (click)="taskService.deleteTask(item.value.id)"
-      >x</span
+      >&#215;
+    </span>
+  </div>
+  <div class="tagIndicator">
+    <span
+      class="taskSpanTagIndicator"
+      *ngFor="let tag of item.value.tags"
+      [style.background-color]="tag.color"
     >
+    </span>
   </div>
 </ng-template>

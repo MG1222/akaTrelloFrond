@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { tap } from "rxjs/operators";
+import { Task } from "../types";
 
 @Injectable({
   providedIn: "root",
@@ -9,16 +10,28 @@ import { tap } from "rxjs/operators";
 export class TaskService {
   constructor(private http: HttpClient) {}
 
+  private taskListUpdated = new Subject<boolean>();
+
   allTasks: Object[] = [];
   todoTasks: Object[] = [];
   doingTasks: Object[] = [];
   doneTasks: Object[] = [];
+
+  isCreateModalOpen = false;
 
   allStatus = [
     { name: "To do", value: "todo", default: true, disabled: true },
     { name: "Doing", value: "doing", default: true, disabled: true },
     { name: "Done", value: "done", default: true, disabled: true },
   ];
+
+  allTags = [
+    { text: "Tag 1", selected: false, value: "tag1" },
+    { text: "Tag 2", selected: false, value: "tag2" },
+    { text: "Tag 3", selected: false, value: "tag3" },
+    { text: "Tag 4", selected: false, value: "tag4" },
+  ];
+
   allMembers = [
     { id: 1, name: "Dorian" },
     { id: 2, name: "Vincent" },
@@ -26,63 +39,65 @@ export class TaskService {
     { id: 4, name: "Margad" },
   ];
 
-  allProjects = [
-    { id: 1, name: "Projet 1" },
-    { id: 2, name: "Projet 2" },
-    { id: 3, name: "Projet 3" },
-    { id: 4, name: "Projet 4" },
-  ];
-
-  selectedItem = {
-    id: "-1",
-    taskTitle: "Default Title",
-    taskDescription: "taskDescription",
-    taskStatus: "taskStatus",
-    comments: "comments",
-    taskMembers: "taskMembers",
-    startDate: "date",
-    endDate: "date",
+  selectedItem: Task = {
+    name: "Default Title",
+    description: "taskDescription",
+    startdate: null,
+    enddate: null,
+    position: -1,
+    statusEnum: "taskStatus",
+    listEntityId: -1,
+    listLabelEntityId: [],
+    membreId: -1,
   };
 
-  isModalOpen = false;
-  isCreateModalOpen = false;
-//TODO: change url
+
+
   getTasks(): Observable<any> {
-    return this.http.get<Object[]>("http://localhost:3001/tasks").pipe(
+    return this.http.get<Object[]>("http://localhost:8080/task").pipe(
       tap((tasks) => {
         this.allTasks = tasks;
-        this.todoTasks = this.allTasks.filter(
-          (task: any) => task.taskStatus === "todo"
-        );
-        this.doingTasks = this.allTasks.filter(
-          (task: any) => task.taskStatus === "doing"
-        );
-        this.doneTasks = this.allTasks.filter(
-          (task: any) => task.taskStatus === "done"
-        );
       })
     );
   }
 
-  addTask(task: any) {
-    this.http.post("http://localhost:3001/tasks", task).toPromise();
-    this.initDB();
+  async addTask(task: any) {
+    await this.http.post("http://localhost:8080/task", task).toPromise();
+    await this.initDB();
+    this.taskListUpdated.next(true);
   }
 
-  updateTask(id: any, task: any) {
+  async updateTask(id: any, task: any) {
     console.log("updateTask", id, task);
-    this.http.put(`http://localhost:3001/tasks/${id}`, task).toPromise();
-    this.initDB();
+    await this.http.put(`http://localhost:8080/task/${id}`, task).toPromise();
+    await this.initDB();
   }
 
-  deleteTask(id: any) {
-    this.http.delete(`http://localhost:3001/tasks/${id}`).toPromise();
-    this.initDB();
+  async deleteTask(id: any) {
+    await this.http.delete(`http://localhost:8080/task/${id}`).toPromise();
+    /*   await this.initDB(); */
+    this.taskListUpdated.next(true);
   }
 
-  initDB() {
-    this.getTasks().subscribe((data) => {
-      this.allTasks = data;
-    });
+  async initDB() {
+    const data = await this.getTasks().toPromise();
+    this.allTasks = data;
   }
+
+  get taskListUpdateNotifier(): Observable<boolean> {
+    return this.taskListUpdated.asObservable();
+  }
+
+  /*   getLabels(): Observable<any> {
+    return this.http
+      .get<{ text: string; selected: boolean; value: string }[]>(
+        `http://localhost:8080/label/}`
+      )
+      .pipe(
+        tap((labels) => {
+          this.allTags = labels;
+          console.log(labels);
+        })
+      );
+  } */
 }

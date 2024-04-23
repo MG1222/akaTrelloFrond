@@ -12,7 +12,7 @@ import { ListComponent } from "./lib/list/list.component";
 import { SortableModule } from "ngx-bootstrap/sortable";
 import { TaskFormComponent } from "./lib/task-form/task-form.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import { TaskService} from "./service/task.service";
+
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { NavComponent } from './lib/nav/nav.component';
 import { ProjectComponent} from "./page/project/project.component";
@@ -21,6 +21,9 @@ import { LoginComponent } from './page/user/login/login.component';
 import { SignupComponent } from './page/user/signup/signup.component';
 import {HttpService} from "./service/http.service";
 import { FooterComponent } from "./lib/footer/footer.component";
+import { TaskService } from "./service/task.service";
+import { ModalComponent } from './lib/modal/modal.component';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +40,7 @@ import { FooterComponent } from "./lib/footer/footer.component";
     LoginComponent,
     SignupComponent,
     FooterComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
