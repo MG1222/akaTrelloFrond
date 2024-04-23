@@ -41,7 +41,7 @@
         form-select
         id="lists"
         [(ngModel)]="taskService.selectedItem.listEntityId"
-        name="lists"
+        name="listEntityId"
       >
         <option *ngFor="let listEntity of lists" [value]="listEntity.id">
           {{ listEntity.name }}

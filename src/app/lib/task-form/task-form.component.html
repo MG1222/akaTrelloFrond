@@ -25,6 +25,7 @@
         class="form-control form-select"
         id="listEntityId"
         formControlName="listEntityId"
+        [(ngModel)]="nrSelect"
       >
         <option *ngFor="let listEntity of lists" [value]="listEntity.id">
             {{ listEntity.name }} 
