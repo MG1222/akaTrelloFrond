@@ -1,14 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
-import { tap} from "rxjs/operators";
-import { Task } from '../types';
+import { tap } from "rxjs/operators";
+import { Task } from "../types";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class TaskService {
-
   constructor(private http: HttpClient) {}
 
   private taskListUpdated = new Subject<boolean>();
@@ -18,11 +17,21 @@ export class TaskService {
   doingTasks: Object[] = [];
   doneTasks: Object[] = [];
 
+  isCreateModalOpen = false;
+
   allStatus = [
     { name: "To do", value: "todo", default: true, disabled: true },
     { name: "Doing", value: "doing", default: true, disabled: true },
     { name: "Done", value: "done", default: true, disabled: true },
   ];
+
+  allTags = [
+    { text: "Tag 1", selected: false, value: "tag1" },
+    { text: "Tag 2", selected: false, value: "tag2" },
+    { text: "Tag 3", selected: false, value: "tag3" },
+    { text: "Tag 4", selected: false, value: "tag4" },
+  ];
+
   allMembers = [
     { id: 1, name: "Dorian" },
     { id: 2, name: "Vincent" },
@@ -35,6 +44,8 @@ export class TaskService {
     description: "taskDescription",
     startdate: null,
     enddate: null,
+    startdate: null,
+    enddate: null,
     position: -1,
     statusEnum: "taskStatus",
     listEntityId: -1,
@@ -42,19 +53,21 @@ export class TaskService {
     membreId: -1,
   };
 
-  isModalOpen = false;
-  isCreateModalOpen = false;
-
   getTasks(): Observable<any> {
     return this.http.get<Object[]>("http://localhost:8080/task").pipe(
         tap((tasks) => {
           this.allTasks = tasks;
        
         })
+    return this.http.get<Object[]>("http://localhost:8080/task").pipe(
+      tap((tasks) => {
+        this.allTasks = tasks;
+      })
     );
   }
 
   async addTask(task: any) {
+    await this.http.post("http://localhost:8080/task", task).toPromise();
     await this.http.post("http://localhost:8080/task", task).toPromise();
     await this.initDB();
     this.taskListUpdated.next(true);
@@ -69,20 +82,30 @@ export class TaskService {
   async deleteTask(id: any) {
     await this.http.delete(`http://localhost:8080/task/${id}`).toPromise();
     await this.initDB();
+    await this.http.delete(`http://localhost:8080/task/${id}`).toPromise();
+    /*   await this.initDB(); */
+    this.taskListUpdated.next(true);
   }
 
   async initDB() {
-      const data = await this.getTasks().toPromise();
-      this.allTasks = data;
-    };
-  
+    const data = await this.getTasks().toPromise();
+    this.allTasks = data;
+  }
 
   get taskListUpdateNotifier(): Observable<boolean> {
     return this.taskListUpdated.asObservable();
   }
 
-  // Utilisez cette méthode pour déclencher une mise à jour
-public notifyTaskListUpdated(): void {
-  this.taskListUpdated.next(true);
-}
+  /*   getLabels(): Observable<any> {
+    return this.http
+      .get<{ text: string; selected: boolean; value: string }[]>(
+        `http://localhost:8080/label/}`
+      )
+      .pipe(
+        tap((labels) => {
+          this.allTags = labels;
+          console.log(labels);
+        })
+      );
+  } */
 }

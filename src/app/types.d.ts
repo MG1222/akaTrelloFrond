@@ -17,6 +17,15 @@ export type MemberInfo = {
     email: string
   }
 
+export type Project = {
+  id: number,
+  name: string,
+  description: string,
+  startdate: Date,
+  enddate: Date,
+  listListDTO: List[];
+  listMembreDTO: Object[];
+}
 
 export type List = {
     id: number,

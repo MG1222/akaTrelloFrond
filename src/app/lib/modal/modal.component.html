@@ -1,0 +1,72 @@
+<div
+  class="modalCompBG"
+  (click)="
+    projectService.isModalProjectOpen = !projectService.isModalProjectOpen
+  "
+></div>
+
+<div class="modalCompWrapper">
+  <form
+    id="taskFormContainer"
+    [formGroup]="projectForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="form-group">
+      <label for="name">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        formControlName="name"
+        placeholder="Enter task title"
+      />
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        class="form-control"
+        id="description"
+        rows="3"
+        formControlName="description"
+      ></textarea>
+    </div>
+    <!--   <div id="statusMemberWrapper">
+    <div class="form-group">
+      <label for="membreId">Member :</label>
+      <select
+        class="form-control form-select"
+        id="membreId"
+        formControlName="listMembreDTO"
+      >
+        <option value="default" selected disabled>
+          Selectionnez un membre
+        </option>
+        <option *ngFor="let user of users" [value]="user.username">
+          {{ user.username }}
+        </option>
+      </select>
+    </div>
+  </div> -->
+    <div id="statusMemberWrapper">
+      <div class="form-group">
+        <label for="startdate">Start date</label>
+        <input
+          type="date"
+          class="form-control"
+          id="startdate"
+          formControlName="startdate"
+        />
+      </div>
+      <div class="form-group">
+        <label for="enddate">End date</label>
+        <input
+          type="date"
+          class="form-control"
+          id="enddate"
+          formControlName="enddate"
+        />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
