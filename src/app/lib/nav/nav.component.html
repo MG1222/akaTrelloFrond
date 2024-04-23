@@ -39,11 +39,11 @@
               <a class="dropdown-item" [href]="'/project/' + project.id">
                 {{ project.name }}
               </a>
-              <span
+              <!--        <span
                 class="projectEditBtn"
                 (click)="projectService.isModalProjectOpen = true"
                 >e
-              </span>
+              </span> -->
               <span
                 class="taskDeleteBtn"
                 (click)="projectService.deleteProject(project.id)"

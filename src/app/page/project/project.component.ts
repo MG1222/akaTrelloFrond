@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { TaskService } from "../../service/task.service";
 import { ProjectService } from "src/app/service/project.service";
 import { MembreService } from "src/app/service/membre.service";
+import { FormControl, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-project",
@@ -18,7 +19,19 @@ export class ProjectComponent implements OnInit {
   projectId: number = parseInt(window.location.pathname.split("/")[2]);
   allProjects: any[] = [];
   userId = this.memberService.loggedInUser;
-  isModalModifProjectOpen = true;
+  isModalModifProjectOpen = false;
+
+  nrSelect = "TODO";
+  nrSelectMember = this.memberService.loggedInUser;
+  taskForm = new FormGroup({
+    name: new FormControl(""),
+    description: new FormControl("default description"),
+    startdate: new FormControl("1991-10-29"),
+    enddate: new FormControl("1991-10-29"),
+    listEntityId: new FormControl("default form"),
+    listLabelEntityId: new FormControl(null),
+    membreId: new FormControl(),
+  });
 
   /*   project = this.projectService.allProjects.filter( project => project.id === this.projectId)[0];
    */

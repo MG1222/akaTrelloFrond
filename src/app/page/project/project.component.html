@@ -2,6 +2,12 @@
   <div class="projectInfos">
     <div>
       <span>{{ allProjects[0]?.name }}</span>
+      <span
+        class="modProject editProjectBtn"
+        (click)="isModalModifProjectOpen = !isModalModifProjectOpen"
+        style="cursor: pointer; background-color: #007bff"
+        >E</span
+      >
       <span class="projectInfosDescription">{{
         allProjects[0]?.description
       }}</span>
@@ -25,4 +31,110 @@
     </div>
   </div>
   <app-list></app-list>
+</div>
+
+<div
+  *ngIf="isModalModifProjectOpen"
+  (click)="isModalModifProjectOpen = !isModalModifProjectOpen"
+  [class]="'modalListBG' + (isModalModifProjectOpen ? '' : ' modalListOpen')"
+></div>
+
+<div
+  *ngIf="isModalModifProjectOpen"
+  [class]="'modalList' + (isModalModifProjectOpen ? '' : ' modalListOpen')"
+>
+  <label for="name">Title :</label>
+  <input
+    class="form-control"
+    [(ngModel)]="allProjects[0].name"
+    name="name"
+    id="name"
+  />
+  <label for="description">Description :</label>
+  <input
+    class="form-control"
+    [(ngModel)]="allProjects[0].description"
+    name="description"
+    id="description"
+  />
+
+  <div class="statusMemberWrapper">
+    <div class="doubleWrapperDates">
+      <label for="title">Members :</label>
+      <select
+        class="form-control form-select"
+        id="members"
+        [(ngModel)]="allProjects[0].membreId"
+        name="members"
+      >
+        <option></option>
+        <option
+          *ngFor="let membreEntity of allProjects[0].listMembreDTO"
+          [value]="membreEntity.membreId"
+        >
+          {{ membreEntity.id }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="statusMemberWrapper">
+    <div class="form-group">
+      <div class="doubleWrapperDates">
+        <label for="startdate">Start Date :</label>
+        <input
+          type="date"
+          class="form-control"
+          name="startdate"
+          id="startdate"
+          [(ngModel)]="allProjects[0].startdate"
+          [value]="allProjects[0].startdate | date : 'yyyy-MM-dd'"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="doubleWrapperDates"></div>
+      <label for="date">End Date :</label>
+      <input
+        type="date"
+        class="form-control"
+        id="enddate"
+        name="enddate"
+        [(ngModel)]="allProjects[0].enddate"
+        [value]="allProjects[0].enddate | date : 'yyyy-MM-dd'"
+      />
+    </div>
+  </div>
+  <!-- <div id="taskSpanTagWrapper">
+  <span
+    class="taskSpanTag bs-tooltip-top"
+    *ngFor="let tag of taskService.allProjects[0].tags"
+    (click)="consoleL(tag)"
+    data-toggle="tooltip"
+    [title]="tag.text"
+    [style.background-color]="tag.color"
+  >
+    {{ tag.text }}
+  </span>
+</div> -->
+  <div id="modalBtnWrapper">
+    <!--     <button
+      cta="delete"
+      (click)="deleteModal(allProjects[0].id); $event.preventDefault()"
+    >
+      Delete
+    </button> -->
+    <!--     <button cta="cancel" (click)="updateModal(); $event.preventDefault()">
+      Cancel
+    </button> -->
+    <button
+      cta="save"
+      (click)="
+        projectService.updateProject(allProjects[0].id, allProjects[0]);
+        $event.preventDefault()
+      "
+    >
+      Save
+    </button>
+  </div>
 </div>
