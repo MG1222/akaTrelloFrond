@@ -18,6 +18,7 @@ import { NavComponent } from "./lib/nav/nav.component";
 import { ProjectComponent } from "./page/project/project.component";
 import { UserComponent } from "./page/user/user.component";
 import { FooterComponent } from "./lib/footer/footer.component";
+import { ModalComponent } from './lib/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { FooterComponent } from "./lib/footer/footer.component";
     ProjectComponent,
     UserComponent,
     FooterComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,

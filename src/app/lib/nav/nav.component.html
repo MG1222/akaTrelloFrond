@@ -38,6 +38,14 @@
             <li *ngFor="let project of allProjects">
               <a class="dropdown-item" href="/project"> {{ project.name }}</a>
             </li>
+            <li>
+              <a
+                class="dropdown-item"
+                style="text-align: center; cursor: pointer"
+                (click)="projectService.isModalProjectOpen = true"
+                >+</a
+              >
+            </li>
           </ul>
         </div>
         <li class="nav-item">
@@ -66,3 +74,5 @@
     </div>
   </div>
 </nav>
+
+<app-modal *ngIf="projectService.isModalProjectOpen"></app-modal>

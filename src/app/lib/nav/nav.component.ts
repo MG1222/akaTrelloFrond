@@ -14,8 +14,8 @@ export class NavComponent implements OnInit {
     public projectService: ProjectService
   ) {}
 
-  allProjects:Project[] = [];
-  userId = 1;
+  allProjects: Project[] = [];
+  userId = 303;
 
   ngOnInit(): void {
     //this.allProjects = this.projectService.getProjects(userId);

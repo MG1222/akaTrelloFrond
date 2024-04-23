@@ -8,6 +8,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class ProjectService {
   constructor(private http: HttpClient) {}
+  isModalProjectOpen = false;
 
   allProjects: Object[] = [
     { id: 1, name: "Project 1" },
@@ -16,7 +17,6 @@ export class ProjectService {
     { id: 4, name: "Project 4" },
   ];
 
-  
   getProjects(iduser: number): Observable<any> {
     return this.http
       .get<Object[]>(`http://localhost:8080/project/user/${iduser}`)
@@ -25,5 +25,11 @@ export class ProjectService {
           this.allProjects = projects;
         })
       );
+  }
+
+  async addProject(project: any) {
+    await this.http.post("http://localhost:8080/project", project).toPromise();
+    /*    await this.initDB();
+    this.taskListUpdated.next(true); */
   }
 }

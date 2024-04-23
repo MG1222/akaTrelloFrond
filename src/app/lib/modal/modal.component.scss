@@ -1,0 +1,29 @@
+:host {
+  position: fixed !important;
+  inset: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 99;
+  height: 100%;
+}
+
+.modalCompWrapper {
+  width: clamp(500px, 50%, 600px) !important;
+  & > form {
+    padding: 1rem;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 99;
+  }
+}
+
+.modalCompBG {
+  position: absolute !important;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}

@@ -10,6 +10,7 @@ export class MembreService {
   constructor(private http: HttpClient) {}
 
   allMembers: Object[] = [];
+  allUsers: Object[] = [];
 
   selectedItem = {
     userId: "-1",
@@ -25,5 +26,13 @@ export class MembreService {
           this.allMembers = members;
         })
       );
+  }
+  getUsers(): Observable<any> {
+    return this.http.get<Object[]>(`http://localhost:8080/user`).pipe(
+      tap((users) => {
+        this.allUsers = users;
+        console.log(users); // Add this line to console log users
+      })
+    );
   }
 }
