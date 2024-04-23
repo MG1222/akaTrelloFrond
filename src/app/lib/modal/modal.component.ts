@@ -21,7 +21,7 @@ export class ModalComponent implements OnInit {
 
   users: any[] = [];
   listMembreDTO = new FormControl({
-    userId: 303,
+    userId: this.memberService.loggedInUser,
     roleEnum: "ADMINISTRATEUR",
   });
 

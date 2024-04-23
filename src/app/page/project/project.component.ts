@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { TaskService } from "../../service/task.service";
 import { ProjectService } from "src/app/service/project.service";
+import { MembreService } from "src/app/service/membre.service";
 
 @Component({
   selector: "app-project",
@@ -10,12 +11,13 @@ import { ProjectService } from "src/app/service/project.service";
 export class ProjectComponent implements OnInit {
   constructor(
     public taskService: TaskService,
-    public projectService: ProjectService
+    public projectService: ProjectService,
+    public memberService: MembreService
   ) {}
 
   projectId: number = parseInt(window.location.pathname.split("/")[2]);
   allProjects: any[] = [];
-  userId = 303;
+  userId = this.memberService.loggedInUser;
 
   /*   project = this.projectService.allProjects.filter( project => project.id === this.projectId)[0];
    */

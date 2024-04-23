@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { MembreService } from "src/app/service/membre.service";
 import { ProjectService } from "src/app/service/project.service";
 import { TaskService } from "src/app/service/task.service";
 import { Project } from "src/app/types";
@@ -11,11 +12,12 @@ import { Project } from "src/app/types";
 export class NavComponent implements OnInit {
   constructor(
     public taskService: TaskService,
-    public projectService: ProjectService
+    public projectService: ProjectService,
+    public memberService: MembreService
   ) {}
 
   allProjects: Project[] = [];
-  userId = 303;
+  userId = this.memberService.loggedInUser;
 
   ngOnInit(): void {
     //this.allProjects = this.projectService.getProjects(userId);
