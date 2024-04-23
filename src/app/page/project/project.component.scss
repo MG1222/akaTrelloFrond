@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 5dvw;
+  padding: 0;
   /*   padding: clamp(50px, 10vh, 100px) 5dvw; */
   height: 100%;
   & app-list {
@@ -18,7 +18,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 1rem 0;
+  padding: 1rem;
   & > * {
     white-space: nowrap;
   }
@@ -42,6 +42,8 @@
   & .projectInfosDescription {
     overflow: hidden;
     text-overflow: ellipsis;
-    width: clamp(50px, 20dvw, 400px);
+    /*  width: clamp(100px, fit-content, 400px); */
+    width: auto;
+    max-width: 20dvw;
   }
 }

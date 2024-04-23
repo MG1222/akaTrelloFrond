@@ -2,19 +2,15 @@
   <div class="projectInfos">
     <div>
       <span>{{ allProjects[0]?.name }}</span>
-      <!--    <span class="projectInfosDescription">{{
-        allProjects[0]?.description
-      }}</span> -->
-      <span class="projectInfosDescription"
-        >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eu
-        lobortis eros. Praesent nec libero et justo malesuada mollis. Proin
-        rhoncus lectus ac iaculis molestie. Morbi ut aliquet diam. Nam fringilla
-        dignissim aliquam. Vestibulum nec neque ut arcu egestas porttitor.
-        Maecenas accumsan vulputate felis et pretium. Sed id arcu vel risus
-        interdum viverra. Pellentesque interdum est quis elit condimentum, vitae
-        consequat lacus venenatis. Nullam consequat elementum suscipit.</span
+      <span
+        *ngIf="allProjects[0].description"
+        class="projectInfosDescription"
+        >{{ allProjects[0]?.description }}</span
       >
-      <span>Se termine le {{ allProjects[0]?.enddate }}</span>
+
+      <span *ngIf="allProjects[0].enddate"
+        >Se termine le {{ allProjects[0]?.enddate }}</span
+      >
     </div>
     <div>
       Membres :

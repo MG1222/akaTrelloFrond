@@ -23,13 +23,12 @@ export class ProjectComponent implements OnInit {
     //this.allProjects = this.projectService.getProjects(userId);
     this.projectService.getProjects(this.userId).subscribe({
       next: (projects) => {
-        this.allProjects = projects;
+        this.allProjects = projects.filter((e: any) => e.id === this.projectId);
+        console.log(this.allProjects);
       },
       error: (err) => {
         console.error("Impossible de récupérer les projets : ", err);
       },
     });
-
-    console.log(this.allProjects);
   }
 }
