@@ -84,9 +84,9 @@ export class TaskFormComponent implements OnInit {
   addTask(task: Task) {
     this.taskService
       .addTask(task)
-      .then(() => {
+      /*       .then(() => {
         this.taskService.notifyTaskListUpdated();
-      })
+      }) */
       .catch((err) => {
         console.error("Error adding task:", err);
       });

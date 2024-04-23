@@ -72,9 +72,9 @@ export class TaskService {
   }
 
   async deleteTask(id: any) {
-    console.log(id);
     await this.http.delete(`http://localhost:8080/task/${id}`).toPromise();
     await this.initDB();
+    this.taskListUpdated.next(true);
   }
 
   async initDB() {
@@ -86,8 +86,16 @@ export class TaskService {
     return this.taskListUpdated.asObservable();
   }
 
-  // Utilisez cette méthode pour déclencher une mise à jour
-  public notifyTaskListUpdated(): void {
-    this.taskListUpdated.next(true);
-  }
+  /*   getLabels(): Observable<any> {
+    return this.http
+      .get<{ text: string; selected: boolean; value: string }[]>(
+        `http://localhost:8080/label/}`
+      )
+      .pipe(
+        tap((labels) => {
+          this.allTags = labels;
+          console.log(labels);
+        })
+      );
+  } */
 }
