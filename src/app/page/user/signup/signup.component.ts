@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../service/auth.service";
 import {Router} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-signup',
@@ -14,24 +15,21 @@ export class SignupComponent implements OnInit {
   confirmPassword: string = '';
 
 
-  constructor(private auth: AuthService, private route: Router) { }
+  constructor(private auth: AuthService, private route: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
   }
 
 
   onSubmit() {
-    console.log(this.email, this.password, this.confirmPassword);
-    let checkPassword = this.verifiesPassword(this.password, this.confirmPassword);
-    if (!checkPassword) {
-      console.log('error');
+    if (this.verifiesPassword(this.password, this.confirmPassword)) {
+      this.auth.register(this.email, this.password).then(() => {
+        this.route.navigate(['login']);
+      })
     }else {
-        this.auth.register(this.email, this.password).then(() => {
-            this.route.navigate(['/login']);
-        })
+      this.msgError = 'Mot de passe non identique';
+
     }
-
-
   }
 
   verifiesPassword(password: string, confirmPassword: string): boolean {

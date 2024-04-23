@@ -18,7 +18,7 @@ export class HttpService {
 
     });
 
-    const apiReq = authReq.clone({url: `http://localhost:3001${req.url}`});
+    const apiReq = authReq.clone({url: `http://localhost:8080${req.url}`});
     return next.handle(apiReq);
   }
 }

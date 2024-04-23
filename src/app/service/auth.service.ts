@@ -19,8 +19,13 @@ export class AuthService {
 
   async register(email: string, password: string): Promise<void> {
 
+    const username = email.split('@')[0];
+    console.log(username + ' username');
     try {
-      const res = await this.http.post('/signup', {email, password}).toPromise();
+      const res = await this.http.post('/user/signup', {username, email, password}).toPromise();
+      console.log(res + ' res');
+      console.log(res)
+
     } catch (error) {
       console.error(error);
       throw new Error('Registration failed. Please try again.');
@@ -38,22 +43,41 @@ export class AuthService {
 
   private decodeToken(token: string): User {
     const payload = token.split('.')[1];
+    console.log(payload + ' payload');
     const payloadDecoded = atob(payload);
     return JSON.parse(payloadDecoded) as User;
   }
 
   async login(email: string, password: string): Promise<User | string> {
     try {
-      const res = await this.http.post<LoginResponse>('/login', { email, password }).toPromise();
-      if (typeof res === 'string' || !res) throw new Error('Invalid response from server');
-      this.user = this.decodeToken(res.accessToken);
+
+      const res = await this.http.post<LoginResponse>('/user/login', {email, password}).toPromise();
+
+      if (typeof res === 'string' || !res )
+        throw new Error(res);
+      console.log(res.accessToken + ' token');
+
+      const payload = res.accessToken.split('.')[1];
+      const payloadDecoded = atob(payload);
+      const userRaw = JSON.parse(payloadDecoded) as User;
+
+      this.user = userRaw;
       this.accessToken = res.accessToken;
+
+      // we add token to local storage
       localStorage.setItem('accessToken', res.accessToken);
-      return this.user;
+      localStorage.getItem('accessToken');
+
+      return userRaw;
+
     } catch (e: any) {
       console.error(e);
-      return e instanceof HttpErrorResponse ? e.error : 'An error occurred';
+      if (e instanceof HttpErrorResponse)
+        return e.error;
+      else
+        return 'An error occurred';
     }
+
   }
 
   isLoggedIn(): boolean {

@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   async onSubmit() {
     const response =  await this.auth.login(this.email, this.password)
-    console.log(response);
+    console.log(response + ' response');
     await this.route.navigate(['project']);
 
 
