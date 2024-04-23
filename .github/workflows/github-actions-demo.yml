@@ -25,4 +25,5 @@ jobs:
       - name: Deploy to Netlify
         run: |
           npm install -g netlify-cli
+          netlify deploy --dir=dist/app --prod --site e77c196e-e9e4-4893-a992-a157ad26621b --auth nfp_UHvyDwc7iF8sHstxsjbQBNaDtt5LVwNje05e
       - run: echo "🍏 This job's status is ${{ job.status }}."
