@@ -110,16 +110,39 @@ export class ListComponent implements OnChanges, OnDestroy {
     this.taskService.getTasks().subscribe({
       next: (tasks: Task[]) => {
         this.allTasks = tasks;
-        this.lists.forEach(list => {
-          this.tasksByList[list.id] = tasks.filter(task => task.listEntityId === list.id);
+        // on cherche à récupérer le nom du membre à partir de son id pour toutes les tâches
+        this.memberService.getMembers(this.projectId).subscribe({
+          next: (members: MemberInfo[]) => {
+            const memberMap = new Map(
+              members.map((member) => [member.membreId, member])
+            );
+
+            // Pour chaque liste, on met les tâches correspondant au statut.
+            this.lists.forEach((list) => {
+              this.tasksByList[list.id] = tasks
+                .filter((task) => task.listEntityId === list.id)
+                .map((task) => {
+                  const member = memberMap.get(task.membreId);
+                  return {
+                    ...task,
+                    // Récupère l'initiale du membre, si la tâche est assignée.
+                    nameMemberTask: member
+                      ? member.username.substring(0, 1).toUpperCase()
+                      : "",
+                  };
+                });
+            });
+          },
+          error: (err) => {
+            console.error("Erreur lors de la récupération des membres :", err);
+          },
         });
-        console.log('Tasks organized by lists');
       },
       error: (err) => {
-        console.error('Error fetching tasks:', err);
-      }
+        console.error("Erreur lors de la récupération des tâches :", err);
+      },
     });
-}
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     (async () => {
@@ -247,5 +270,10 @@ export class ListComponent implements OnChanges, OnDestroy {
     this.taskService.selectedItem = value;
   }
 
-
+  /*
+  (onChange)="onChange(itemList.name, itemList.id)"
+  async onChange(name: string, id: number) {
+    console.log("this.taskDragDrop.listEntityId" + this.taskDragDrop.listEntityId);
+    console.log("id" + id);
+  } */
 }

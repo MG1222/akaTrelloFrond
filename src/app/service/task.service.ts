@@ -44,8 +44,6 @@ export class TaskService {
     description: "taskDescription",
     startdate: null,
     enddate: null,
-    startdate: null,
-    enddate: null,
     position: -1,
     statusEnum: "taskStatus",
     listEntityId: -1,
@@ -55,11 +53,6 @@ export class TaskService {
 
   getTasks(): Observable<any> {
     return this.http.get<Object[]>("http://localhost:8080/task").pipe(
-        tap((tasks) => {
-          this.allTasks = tasks;
-       
-        })
-    return this.http.get<Object[]>("http://localhost:8080/task").pipe(
       tap((tasks) => {
         this.allTasks = tasks;
       })
@@ -67,7 +60,6 @@ export class TaskService {
   }
 
   async addTask(task: any) {
-    await this.http.post("http://localhost:8080/task", task).toPromise();
     await this.http.post("http://localhost:8080/task", task).toPromise();
     await this.initDB();
     this.taskListUpdated.next(true);
@@ -80,8 +72,6 @@ export class TaskService {
   }
 
   async deleteTask(id: any) {
-    await this.http.delete(`http://localhost:8080/task/${id}`).toPromise();
-    await this.initDB();
     await this.http.delete(`http://localhost:8080/task/${id}`).toPromise();
     /*   await this.initDB(); */
     this.taskListUpdated.next(true);

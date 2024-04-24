@@ -21,13 +21,10 @@ export class MembreService {
   loggedInUser = 1;
 
   getMembers(idproject: number): Observable<any> {
-<<<<<<< HEAD
-    return this.http.get<Object[]>(`http://localhost:8080/member/project/${idproject}`).pipe(
-=======
     return this.http
       .get<Object[]>(`http://localhost:8080/member/project/${idproject}`)
       .pipe(
->>>>>>> f50bfacb5a401aa996742ef766bc599b04ee2c23
+
         tap((members) => {
           this.allMembers = members;
         })
