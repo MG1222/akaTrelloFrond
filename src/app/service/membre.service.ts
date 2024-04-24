@@ -11,6 +11,9 @@ export class MembreService {
 
   allMembers: Object[] = [];
   allUsers: Object[] = [];
+  projectUsers = this.allUsers.filter(
+    (user: any) => user.id === this.loggedInUser
+  );
 
   selectedItem = {
     userId: "-1",
@@ -33,7 +36,7 @@ export class MembreService {
     return this.http.get<Object[]>(`http://localhost:8080/user`).pipe(
       tap((users) => {
         this.allUsers = users;
-        console.log(users); // Add this line to console log users
+        console.log(this.allUsers); // Add this line to console log users
       })
     );
   }

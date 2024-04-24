@@ -3,13 +3,13 @@
     *ngFor="let itemList of lists"
     class="aze col-xs-1 col-1 col-md-2 col-lg-2"
   >
-    <p>{{ itemList.name }}</p>
+    <p style="font-weight: bold">{{ itemList.name }}</p>
     <bs-sortable
       [(ngModel)]="tasksByList[itemList.id]"
       [itemTemplate]="detailedItemTemplate"
       itemClass="sortable-item"
       itemActiveClass="sortable-item-active"
-      placeholderItem="Drag here"
+      placeholderItem="Vide"
       placeholderClass="placeholderStyle text-center"
       wrapperClass="sortable-wrapper"
       (onChange)="limitedConsoleL(itemList.name)"
@@ -108,15 +108,24 @@
 </div> -->
   <div id="modalBtnWrapper">
     <button
+      class="btn btn-primary"
       cta="delete"
       (click)="deleteModal(selectedItem.id); $event.preventDefault()"
     >
       Delete
     </button>
-    <button cta="cancel" (click)="updateModal(); $event.preventDefault()">
+    <!--     <button
+      class="btn btn-primary"
+      cta="cancel"
+      (click)="updateModal(); $event.preventDefault()"
+    >
       Cancel
-    </button>
-    <button cta="save" (click)="updateModal(); $event.preventDefault()">
+    </button> -->
+    <button
+      class="btn btn-primary"
+      cta="save"
+      (click)="updateModal(); $event.preventDefault()"
+    >
       Save
     </button>
   </div>
@@ -136,7 +145,9 @@
 </div>
 
 <div id="listBtnWrapper">
-  <button class="createTask" (click)="isEditMode = !isEditMode">Edit</button>
+  <button class="createTask editBtnWrapper" (click)="isEditMode = !isEditMode">
+    <img src="assets/img/edit.png" alt="edit" />
+  </button>
   <button
     class="createTask"
     (click)="taskService.isCreateModalOpen = !taskService.isCreateModalOpen"

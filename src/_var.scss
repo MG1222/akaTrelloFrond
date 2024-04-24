@@ -10,3 +10,11 @@ $ctaGreen: green;
 $ctaNeutral: white;
 
 $navWidth: clamp(200px, 15vw, 15vw);
+
+.closeBtnGlobal {
+  position: absolute;
+  font-size: 2rem;
+  right: 1rem;
+  top: 0rem;
+  cursor: pointer;
+}

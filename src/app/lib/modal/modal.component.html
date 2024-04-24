@@ -6,6 +6,12 @@
 ></div>
 
 <div class="modalCompWrapper">
+  <div
+    class="closeBtn"
+    (click)="
+      projectService.isModalProjectOpen = !projectService.isModalProjectOpen
+    "
+  ></div>
   <form
     id="taskFormContainer"
     [formGroup]="projectForm"

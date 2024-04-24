@@ -19,16 +19,22 @@
   display: flex;
   justify-content: space-between;
   padding: 1rem 0;
+
   & > * {
     white-space: nowrap;
   }
   & :first-child {
     display: flex;
     gap: 2rem;
+    color: whitesmoke;
   }
   & :last-child {
     display: flex;
-    gap: 0.5rem;
+
+    & :first-child {
+      margin-right: 1rem;
+      color: black;
+    }
     & > span {
       $btnSize: 1.5rem;
       background-color: $blue;
@@ -36,6 +42,13 @@
       width: $btnSize;
       height: $btnSize;
       border-radius: 99vw;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:not(:last-child) {
+        margin-right: -0.7rem;
+      }
     }
   }
 
@@ -132,7 +145,7 @@
 
 #modalBtnWrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 0.5rem 0 0 0;
 
@@ -255,4 +268,9 @@
   height: $btnSize;
   border-radius: 99vw;
   text-align: center;
+}
+
+.projectInfosTitle {
+  cursor: pointer;
+  font-weight: bold;
 }

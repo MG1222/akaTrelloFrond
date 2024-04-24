@@ -28,7 +28,7 @@
         [(ngModel)]="nrSelect"
       >
         <option *ngFor="let listEntity of lists" [value]="listEntity.id">
-            {{ listEntity.name }} 
+          {{ listEntity.name }}
         </option>
       </select>
     </div>
@@ -70,7 +70,7 @@
     </div>
   </div>
 
-  <div class="tagsWrapper">
+  <!--   <div class="tagsWrapper">
     <div class="tagsWrapper">
       <span
         *ngFor="let tag of taskService.allTags"
@@ -80,7 +80,6 @@
         {{ tag.text }}
       </span>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <!--   <app-project [parentData]="taskForm.value"></app-project> -->
-  </div>
+  </div> -->
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>

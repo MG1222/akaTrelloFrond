@@ -23,6 +23,7 @@
   padding: 8px;
   outline: 1px solid red;
   min-height: 40dvh;
+  background: white;
 
   border-radius: 8px;
   & > .sortable-item {
@@ -57,6 +58,19 @@
   padding: 8px 8px;
   outline: 1px solid black;
   border-radius: 4px;
+  &.editBtnWrapper {
+    width: auto !important;
+    &.selected {
+      border: 2px solid red !important;
+    }
+    & > img {
+      $btnSize: 1.5rem;
+
+      aspect-ratio: 1/1;
+      width: $btnSize;
+    }
+  }
+
   &:focus,
   &:focus-within {
     outline: 1px dotted black;
@@ -149,10 +163,10 @@
 
 #modalBtnWrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 1rem;
   align-items: center;
   padding: 0.5rem 0 0 0;
-
   & > button {
     width: clamp(150px, 25%, 300px);
     white-space: ellipsis;

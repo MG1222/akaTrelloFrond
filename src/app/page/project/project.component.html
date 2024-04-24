@@ -1,12 +1,11 @@
 <div id="project-wrapper">
   <div class="projectInfos">
     <div>
-      <span>{{ allProjects[0]?.name }}</span>
       <span
-        class="modProject editProjectBtn"
+        class="projectInfosTitle"
         (click)="isModalModifProjectOpen = !isModalModifProjectOpen"
-        style="cursor: pointer; background-color: #007bff"
-        >E</span
+        style="cursor: pointer"
+        >{{ allProjects[0]?.name }}</span
       >
       <span class="projectInfosDescription">{{
         allProjects[0]?.description
@@ -15,19 +14,14 @@
       <span>Se termine le {{ allProjects[0]?.enddate }}</span>
     </div>
     <div>
-      Membres :
+      <p>Membres :</p>
+
+      <span style="background-color: rgb(211, 7, 7)">M</span>
       <span *ngFor="let member of allProjects[0]?.listMembreDTO">{{
-        member.id
+        this.allUsers[0].username.substring(0, 1).toUpperCase()
       }}</span>
-      <span *ngFor="let member of allProjects[0]?.listMembreDTO">{{
-        member.id
-      }}</span>
-      <span *ngFor="let member of allProjects[0]?.listMembreDTO">{{
-        member.id
-      }}</span>
-      <span *ngFor="let member of allProjects[0]?.listMembreDTO">{{
-        member.id
-      }}</span>
+      <span style="background-color: rgb(32, 196, 13)">V</span>
+      <span style="background-color: rgb(10, 41, 7)">F</span>
     </div>
   </div>
   <app-list></app-list>
@@ -43,6 +37,12 @@
   *ngIf="isModalModifProjectOpen"
   [class]="'modalList' + (isModalModifProjectOpen ? '' : ' modalListOpen')"
 >
+  <div
+    (click)="isModalModifProjectOpen = !isModalModifProjectOpen"
+    class="closeBtnGlobal"
+  >
+    &#215;
+  </div>
   <label for="name">Title :</label>
   <input
     class="form-control"
@@ -117,7 +117,7 @@
     {{ tag.text }}
   </span>
 </div> -->
-  <div id="modalBtnWrapper">
+  <div id="modalBtnWrapper" style="gap: 1rem; padding-top: 1rem">
     <!--     <button
       cta="delete"
       (click)="deleteModal(allProjects[0].id); $event.preventDefault()"
@@ -128,6 +128,14 @@
       Cancel
     </button> -->
     <button
+      class="btn btn-primary"
+      cta="delete"
+      (click)="projectService.deleteProject(allProjects[0].id)"
+    >
+      Delete
+    </button>
+    <button
+      class="btn btn-primary"
       cta="save"
       (click)="
         projectService.updateProject(allProjects[0].id, allProjects[0]);

@@ -18,6 +18,7 @@ export class ProjectComponent implements OnInit {
 
   projectId: number = parseInt(window.location.pathname.split("/")[2]);
   allProjects: any[] = [];
+  allUsers: any[] = [];
   userId = this.memberService.loggedInUser;
   isModalModifProjectOpen = false;
 
@@ -43,6 +44,15 @@ export class ProjectComponent implements OnInit {
       },
       error: (err) => {
         console.error("Impossible de récupérer les projets : ", err);
+      },
+    });
+
+    this.memberService.getUsers().subscribe({
+      next: (users) => {
+        this.allUsers = users;
+      },
+      error: (err) => {
+        console.error("Impossible de récupérer les utilisateurs : ", err);
       },
     });
 
