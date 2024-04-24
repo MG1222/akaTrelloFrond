@@ -13,12 +13,40 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/contact">Contact</a>
                 </li>
-                <div class="navbar-nav d-flex flex-row-reverse">
-                    <a class="nav-link p-2" *ngIf="auth.isLoggedIn()" routerLink="/create-task">Create Task</a>
-                    <a class="nav-link p-2" *ngIf="auth.isLoggedIn()" routerLink="/task">TODO</a>
+                <div class="navbar-nav d-flex flex-row-reverse" *ngIf="auth.isLoggedIn()">
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="/profile">Profile</a>
+                        </li>
+                        <li *ngFor="let project of allProjects">
+                            <a class="dropdown-item" [href]="'/project/' + project.id">
+                                {{ project.name }}
+                            </a>
+                            <span
+                                    class="projectEditBtn"
+                                    (click)="projectService.isModalProjectOpen = true"
+                            >
+                            </span>
+                            <span
+                                    class="taskDeleteBtn"
+                                    (click)="projectService.deleteProject(project.id)"
+                            >&#215;
+                            </span>
+                        </li>
+
+                        <li>
+                            <a
+                                    class="dropdown-item"
+                                    style="text-align: center; cursor: pointer"
+                                    (click)="projectService.isModalProjectOpen = true"
+                            >+</a
+                            >
+                        </li>
+                    </ul>
+
                 </div>
 
-                <div class="dropdown">
+                <div class="dropdown" *ngIf="!auth.isLoggedIn()">
                     <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Se Connecter
                     </a>
@@ -26,37 +54,13 @@
                     <ul class="dropdown-menu">
                         <li ><a class="dropdown-item" href="/login">Se Connecter</a></li>
                         <li ><a class="dropdown-item" href="/signup">Créer un compte</a></li>
-
                     </ul>
                 </div>
+
+                <div *ngIf="auth.isLoggedIn()">
+                    <a href="#" (click)="auth.logout()">Se Déconnecter</a>
+                </div>
             </ul>
-
-          <ul class="dropdown-menu">
-            <li *ngFor="let project of allProjects">
-              <a class="dropdown-item" [href]="'/project/' + project.id">
-                {{ project.name }}
-              </a>
-              <span
-                class="projectEditBtn"
-                (click)="projectService.isModalProjectOpen = true"
-                >e
-              </span>
-              <span
-                class="taskDeleteBtn"
-                (click)="projectService.deleteProject(project.id)"
-                >&#215;
-              </span>
-            </li>
-
-            <li>
-              <a
-                class="dropdown-item"
-                style="text-align: center; cursor: pointer"
-                (click)="projectService.isModalProjectOpen = true"
-                >+</a
-              >
-            </li>
-          </ul>
         </div>
 
   </div>
